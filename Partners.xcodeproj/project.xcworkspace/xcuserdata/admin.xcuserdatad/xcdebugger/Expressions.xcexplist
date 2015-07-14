@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "Partners.PartnersViewController.didRecieveResponse (Partners.PartnersViewController)(ObjectiveC.NSDictionary) -&gt; ():PartnersViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "arrayOfElements">
+            </PersistentString>
+            <PersistentString
+               value = "String(ch)">
+            </PersistentString>
+            <PersistentString
+               value = "partnersByName">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Partners.PartnersViewController.tableView (Partners.PartnersViewController)(ObjectiveC.UITableView, cellForRowAtIndexPath : ObjectiveC.NSIndexPath) -&gt; ObjectiveC.UITableViewCell:PartnersViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "jsonResault?">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
