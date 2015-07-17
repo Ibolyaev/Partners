@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Partners/PartnersViewController.swift"
-            timestampString = "458573699.795184"
+            filePath = "Partners/PartnerDetailInfo.swift"
+            timestampString = "458810919.919256"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
-            landmarkName = "didRecieveResponse(_:)"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "actionButton(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

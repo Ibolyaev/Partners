@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pt6-Yt-dlz">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Partners-->
@@ -36,27 +37,59 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
-                        <segue destination="dZk-LA-QvM" kind="show" id="cqf-UN-a9p"/>
+                        <segue destination="dZk-LA-QvM" kind="show" identifier="segueToDetailView" id="TYg-0k-J24"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fq0-ba-p4l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="821" y="-442"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Partner Detail Info-->
         <scene sceneID="OdY-2S-Vur">
             <objects>
-                <tableViewController id="dZk-LA-QvM" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PartnerDetailInfo" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dZk-LA-QvM" customClass="PartnerDetailInfo" customModule="Partners" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="K5D-VO-fBV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="tQR-NQ-gWG">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PartnerDetailInfoCell" id="tQR-NQ-gWG" customClass="PartnerDetailInfoCell" customModule="Partners" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tQR-NQ-gWG" id="wr4-G5-MTv">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rM1-PG-UUu">
+                                            <rect key="frame" x="35" y="4" width="230" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="339" id="KdL-wd-EzE"/>
+                                                <constraint firstAttribute="width" constant="230" id="V5G-vq-gjn"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="KdL-wd-EzE"/>
+                                                </mask>
+                                            </variation>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1yf-7l-tJ3">
+                                            <rect key="frame" x="293" y="4" width="69" height="35"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="rM1-PG-UUu" firstAttribute="top" secondItem="wr4-G5-MTv" secondAttribute="topMargin" constant="-4" id="LSy-Tp-5kZ"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="rM1-PG-UUu" secondAttribute="bottom" constant="-4" id="Ynk-Rk-iZE"/>
+                                        <constraint firstItem="rM1-PG-UUu" firstAttribute="leading" secondItem="wr4-G5-MTv" secondAttribute="leadingMargin" constant="27" id="pBG-IQ-Tgg"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="actionButton" destination="1yf-7l-tJ3" id="pcn-2c-qXG"/>
+                                    <outlet property="titleLabel" destination="rM1-PG-UUu" id="FW4-BB-hci"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -68,7 +101,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AuB-dh-huq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1320" y="-442"/>
+            <point key="canvasLocation" x="1414" y="-442"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Zpg-N0-lm9">

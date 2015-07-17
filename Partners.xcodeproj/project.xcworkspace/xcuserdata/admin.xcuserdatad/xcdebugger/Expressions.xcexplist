@@ -9,10 +9,32 @@
                value = "arrayOfElements">
             </PersistentString>
             <PersistentString
-               value = "String(ch)">
+               value = "jsonResault">
             </PersistentString>
             <PersistentString
                value = "partnersByName">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Partners.PartnerDetailInfo.viewWillAppear (Partners.PartnerDetailInfo)(Swift.Bool) -&gt; ():PartnerDetailInfo.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "contactJSON">
+            </PersistentString>
+            <PersistentString
+               value = "contactInfo">
+            </PersistentString>
+            <PersistentString
+               value = "">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Partners.PartnerDetailInfo.tableView (Partners.PartnerDetailInfo)(ObjectiveC.UITableView, numberOfRowsInSection : Swift.Int) -&gt; Swift.Int:PartnerDetailInfo.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "contactJSON">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

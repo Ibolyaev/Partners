@@ -9,12 +9,14 @@
 import Foundation
 import UIKit
 
-class PartnersViewController: UITableViewController,ODataCollectionDelegate, UITableViewDataSource {
-    var partnersByName = [String: [JSONValue]]()
-    var jsonResault: NSArray?
+class PartnersViewController: UITableViewController,ODataCollectionDelegate, UITableViewDataSource,UITableViewDelegate {
     
-    //let partnersByName: [String:NSMutableArray]()
-    //var partnersByName:[String:NSMutableArray()]()
+    var partnersByName = NSMutableDictionary()
+    var jsonResault: NSArray?
+    var partnersTitles: NSArray?
+    let indexTitles = NSArray(objects: "A" , "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#")
+        
+        as [AnyObject]
     
     @IBAction func loadResaultsTouchUpInside(sender: UIBarButtonItem) {
         var filter = OdataFilter()
@@ -25,39 +27,94 @@ class PartnersViewController: UITableViewController,ODataCollectionDelegate, UIT
         dataCollection._delegate = self
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Make sure your segue name in storyboard is the same as this line
+    
+        var secondViewController : PartnerDetailInfo = segue.destinationViewController as! PartnerDetailInfo
+        
+        
+        
+        var indexPath = tableView.indexPathForSelectedRow() //get index of data for selected row
+        
+        
+        let sectionTitle: AnyObject? = partnersTitles?.objectAtIndex(indexPath!.section)
+        let sectionPartners = partnersByName.objectForKey(sectionTitle!) as! NSArray
+        
+        let partner = sectionPartners.objectAtIndex(indexPath!.row) as! JSONValue
+
+        
+        secondViewController.contactJSON = partner
+        //println(segue.identifier)
+    
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        performSegueWithIdentifier("segueToDetailView", sender: self)
+        
+        /*let contactView:ContactDetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("PartnerDetailInfo")! as! PartnerDetailInfo
+        
+        contactView.contactJSON = arrayOfJsonObjects?[indexPath.row] as! NSDictionary
+        
+        self.navigationController!.pushViewController(contactView, animated: true)*/
+        
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "contactCell")
         
-        cell.textLabel?.text = jsonResault?[index: indexPath.row]?[key:"Description"] as! NSString as String
+        let sectionTitle: AnyObject? = partnersTitles?.objectAtIndex(indexPath.section)
+        let sectionPartners = partnersByName.objectForKey(sectionTitle!) as! NSArray
+        
+        let partner = sectionPartners.objectAtIndex(indexPath.row) as! JSONValue
+        
+        cell.textLabel?.text =  partner[key:"Description"] as! NSString as String
         
         return cell
         
     }
     
-    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]! {
+    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
         
-        
-        return NSArray(objects: "A" , "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#")
-        
- as [AnyObject]        
-        
-    }
-    
-    /*override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
-        return partnersByName?.count!
-        
-    }*/
-    
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if let jsonResault = jsonResault {
-            return jsonResault.count
+        if let partnersTitles = partnersTitles {
+            return partnersTitles.indexOfObject(title)
         }
         
         return 0
+        
+    }
+    
+    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]! {
+        
+        return indexTitles
+        
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if let partnersTitles = partnersTitles {
+            return partnersTitles.objectAtIndex(section) as? String
+        }
+        return ""
+
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
+        if let partnersTitles = partnersTitles {
+            return partnersTitles.count
+        }
+        
+        return 0
+        
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        // Return the number of rows in the section.
+        let sectionTitle: AnyObject? = partnersTitles?.objectAtIndex(section)
+        let sectionParners = partnersByName.objectForKey(sectionTitle!) as! NSArray
+        return sectionParners.count
         
     }
     
@@ -73,26 +130,34 @@ class PartnersViewController: UITableViewController,ODataCollectionDelegate, UIT
         
         
         for var i=0;i<jsonResault?.count; i++ {
+            
             var element = jsonResault?.objectAtIndex(i) as! JSONValue
             
-            var name = element[key:"Description"] as! NSString as String
+            let name = element[key:"Description"] as! NSString as String
             
-            var ch = name[name.startIndex]
+            let ch = name[name.startIndex]
             
-            var a = partnersByName[String(ch)]
+            let letter = String(ch)
+            
+            var a: AnyObject? = partnersByName[letter]
             
             if a == nil {
-                partnersByName[String(ch)] = [element]
+                partnersByName[letter] = NSArray(object: element as! AnyObject) as AnyObject
             }else{
-                var array = partnersByName[String(ch)]
-                array?.append(element)
-                partnersByName.updateValue(array!, forKey: String(ch))
+                
+                var array: AnyObject? = partnersByName[letter]
+                
+                array?.arrayByAddingObject(element as! AnyObject)
+                
+                partnersByName.setValue(array, forKey: letter)
+                
             }
             
         }
         
+        partnersTitles = partnersByName.allKeys
+        partnersTitles?.sortedArrayUsingSelector(Selector("localizedCaseInsensitiveCompare:"))
         
-        println(partnersByName)
         
         dispatch_async(dispatch_get_main_queue()) {
             
