@@ -23,7 +23,7 @@ class Person : NSManagedObject {
     
     @NSManaged var name: String
     @NSManaged var refKey: String
-    
+    @NSManaged var partner: Partner
     @NSManaged var contactInfo: [ContactInfo]
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
@@ -31,7 +31,7 @@ class Person : NSManagedObject {
     }
     
     
-    init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
+    init(partner:Partner, contactInfo: [ContactInfo],dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
         
         let entity =  NSEntityDescription.entityForName("Person", inManagedObjectContext: context)!
@@ -40,6 +40,8 @@ class Person : NSManagedObject {
         
         name = dictionary[Keys.Name] as! String
         refKey = dictionary[Keys.RefKey] as! String
+        self.partner = partner
+        self.contactInfo = contactInfo
         
         
     }

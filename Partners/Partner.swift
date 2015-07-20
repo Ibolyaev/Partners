@@ -41,6 +41,7 @@ class Partner : NSManagedObject {
         name = dictionary[Keys.Name] as! String
         refKey = dictionary[Keys.RefKey] as! String
         
+        
 
     }
 }

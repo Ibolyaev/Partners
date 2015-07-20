@@ -17,19 +17,19 @@ class ContactInfo : NSManagedObject {
     
     struct Keys {
         
-        static let Name = "Представление"
+        static let Info = "Представление"
         static let TelephoneNumber = "НомерТелефона"
         static let TypeContact = "Тип"
         static let RefKey = "Ref_Key"
         
     }
     
-    @NSManaged var name: String
+    @NSManaged var info: String
     @NSManaged var refKey: String
     @NSManaged var typeContact: String
     @NSManaged var telephoneNumber: String
-    
-    @NSManaged var contactInfo: [ContactInfo]
+    @NSManaged var person: Person?
+    @NSManaged var partner: Partner?
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
@@ -43,11 +43,13 @@ class ContactInfo : NSManagedObject {
         super.init(entity: entity,insertIntoManagedObjectContext: context)
         
         
-        name = dictionary[Keys.Name] as! String
+        info = dictionary[Keys.Info] as! String
         telephoneNumber = dictionary[Keys.TelephoneNumber] as! String
         typeContact = dictionary[Keys.TypeContact] as! String
         
         refKey = dictionary[Keys.RefKey] as! String
+        
+        
         
         
     }

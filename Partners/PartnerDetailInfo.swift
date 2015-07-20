@@ -11,14 +11,14 @@ import UIKit
 
 class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableViewDelegate {
 
-    var contactJSON: JSONValue!
+    var partner: Partner?
     var contactInfo: NSArray?
     
     override func viewWillAppear(animated: Bool) {
         
-        contactInfo = contactJSON?[key:"КонтактнаяИнформация"] as? NSArray
+        contactInfo = partner!.contactInfo
         
-        self.navigationItem.title = contactJSON[key:"Description"] as! NSString as String
+        self.navigationItem.title = partner!.name
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -31,78 +31,122 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = self.tableView.dequeueReusableCellWithIdentifier("PartnerDetailInfoCell", forIndexPath: indexPath) as! PartnerDetailInfoCell
+        if indexPath.row == 0 {
+           var cell = self.tableView.dequeueReusableCellWithIdentifier("PartnerDetailInfoCell", forIndexPath: indexPath) as! PartnerDetailInfoCell
+            return configurePartnerCell(cell,indexPath: indexPath)
+        }else{
+           var cell = self.tableView.dequeueReusableCellWithIdentifier("ContactInfoCell", forIndexPath: indexPath) as! ContactInfoCell
+            return configureContactInfoCell(cell,indexPath: indexPath)
+        }
         
-        cell.actionButton.tag = indexPath.row;
-        cell.actionButton.addTarget(self, action: "actionButton:", forControlEvents: .TouchUpInside)
         
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if indexPath.row == 0 {
+            return 88.0
+        }else{
+            return 44.0
+        }
+        
+    }
+    
+    func configureContactInfoCell(cell:ContactInfoCell,indexPath: NSIndexPath) -> UITableViewCell {
+        cell.subtitleLabel.text = "testor"
         
         
         if let contactInfo = contactInfo {
-            var a = contactInfo.objectAtIndex(indexPath.row) as! JSONValue
-            //[11]	(null)	@"Тип" : @"Телефон"
-            if let contactType = a[key:"Тип"] as? String {
-                
-                switch contactType {
-                case "Телефон":
-                    cell.titleLabel.text = a[key:"НомерТелефона"] as? String
-                    
-                    cell.actionButton.setImage(UIImage(named: "Phone-32"), forState: UIControlState.Normal)
-                case "АдресЭлектроннойПочты":
-                    cell.titleLabel.text = a[key:"Представление"] as? String
-                    cell.actionButton.setImage(UIImage(named: "Message-32"), forState: UIControlState.Normal)
-                default:
-                    cell.titleLabel.text = ""
-                }
-
-                
-            }
+            var elementOfcontactInfo = contactInfo.objectAtIndex(indexPath.row) as! ContactInfo
             
+            switch elementOfcontactInfo.typeContact {
+            case "Телефон":
+                cell.titleLabel.text = elementOfcontactInfo.telephoneNumber
+                
+                cell.imageView?.image = UIImage(named: "Phone-32")
+            case "АдресЭлектроннойПочты":
+                cell.titleLabel.text = elementOfcontactInfo.info
+                cell.imageView?.image = UIImage(named: "Message-32")
+            default:
+                cell.titleLabel.text = ""
+            }
             
         }
         
         return cell
         
     }
-    
-    func actionButton(sender: UIButton) {
+
+    func configurePartnerCell(cell:PartnerDetailInfoCell,indexPath: NSIndexPath) -> UITableViewCell {
+        
+        cell.subtitleLabel.text = "testor"
         
         
         if let contactInfo = contactInfo {
-            let info = contactInfo.objectAtIndex(sender.tag) as! JSONValue
+            var elementOfcontactInfo = contactInfo.objectAtIndex(indexPath.row) as! ContactInfo
+            cell.partnerLabel.text = elementOfcontactInfo.partner?.name
             
-            if let contactType = info[key:"Тип"] as? String {
+            switch elementOfcontactInfo.typeContact {
+            case "Телефон":
+                cell.titleLabel.text = elementOfcontactInfo.telephoneNumber
                 
-                switch contactType {
-                case "Телефон":
-                    let number = info[key:"НомерТелефона"] as? String
-                    if let number = number {
-                        let phone = "tel://\(number)"
-                        let url = NSURL(string: phone)
-                        UIApplication.sharedApplication().openURL(url!)
-                    }
-                    
-                case "АдресЭлектроннойПочты":
-                    let email = info[key:"Представление"] as? String
-                    if let email = email {
-                        let url = NSURL(string: "mailto:\(email)")
-                        UIApplication.sharedApplication().openURL(url!)
-                    }
-                    
-                default:
-                    return
-                }
-                
-                
+                cell.imageViewIcon.image = UIImage(named: "Phone-32")
+            case "АдресЭлектроннойПочты":
+                cell.titleLabel.text = elementOfcontactInfo.info
+                cell.imageViewIcon.image = UIImage(named: "Message-32")
+            default:
+                cell.titleLabel.text = ""
             }
             
+        }
+        
+        return cell
+
+    }
+    
+    func callAction(elementOfcontactInfo:ContactInfo) {
+        switch elementOfcontactInfo.typeContact {
+        case "Телефон":
+            let number = elementOfcontactInfo.telephoneNumber
             
+            let phone = "tel://\(number)"
+            let url = NSURL(string: phone)
+            UIApplication.sharedApplication().openURL(url!)
+            
+            
+        case "АдресЭлектроннойПочты":
+            let email = elementOfcontactInfo.info
+            
+            let url = NSURL(string: "mailto:\(email)")
+            UIApplication.sharedApplication().openURL(url!)
+            
+            
+        default:
+            break
         }
 
         
+    }
+    
+    func actionButton(sender: UIButton) {
+        
+        if let contactInfo = contactInfo {
+            
+            var elementOfcontactInfo = contactInfo.objectAtIndex(sender.tag) as! ContactInfo
+            callAction(elementOfcontactInfo)
+        }
         
     }
 
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if let contactInfo = contactInfo {
+            callAction(contactInfo.objectAtIndex(indexPath.row) as! ContactInfo)
+        }
+
+        
+    }
+    
 
 }
 

@@ -1,21 +1,18 @@
 //
-//  PartnerDetailInfoCell.swift
+//  ContactInfoCell.swift
 //  Partners
 //
-//  Created by Admin on 16.07.15.
+//  Created by Admin on 20.07.15.
 //  Copyright (c) 2015 Admin. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class PartnerDetailInfoCell: UITableViewCell {
+class ContactInfoCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var partnerLabel: UILabel!
-    
-    @IBOutlet weak var imageViewIcon: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,4 +25,6 @@ class PartnerDetailInfoCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+        
 }
+

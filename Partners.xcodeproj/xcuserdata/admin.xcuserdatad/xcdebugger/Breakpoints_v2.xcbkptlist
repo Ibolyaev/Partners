@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Partners/PartnerDetailInfo.swift"
-            timestampString = "458810919.919256"
+            timestampString = "459088899.769246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "actionButton(_:)"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
+            landmarkName = "callAction(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
