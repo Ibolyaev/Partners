@@ -19,6 +19,12 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
         contactInfo = partner!.contactInfo
         
         self.navigationItem.title = partner!.name
+        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 88.0
+        tableView.separatorInset = UIEdgeInsetsZero
+        
+        
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -42,7 +48,7 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
         
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    /*override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         if indexPath.row == 0 {
             return 88.0
@@ -50,7 +56,7 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
             return 44.0
         }
         
-    }
+    }*/
     
     func configureContactInfoCell(cell:ContactInfoCell,indexPath: NSIndexPath) -> UITableViewCell {
         cell.subtitleLabel.text = "testor"
