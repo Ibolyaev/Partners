@@ -22,7 +22,7 @@
 		84874B731B54E81700BD25A0 /* Partner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84874B721B54E81700BD25A0 /* Partner.swift */; };
 		84874B751B54E93100BD25A0 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84874B741B54E93100BD25A0 /* Person.swift */; };
 		84874B771B569DAC00BD25A0 /* PartnerDetailInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84874B761B569DAC00BD25A0 /* PartnerDetailInfo.swift */; };
-		84874B7C1B57D8BA00BD25A0 /* PartnerDetailInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84874B7B1B57D8BA00BD25A0 /* PartnerDetailInfoCell.swift */; };
+		84874B7C1B57D8BA00BD25A0 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84874B7B1B57D8BA00BD25A0 /* HeaderCell.swift */; };
 		84874B7E1B58EE9100BD25A0 /* ContactInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84874B7D1B58EE9100BD25A0 /* ContactInfo.swift */; };
 		84874B821B58FA0600BD25A0 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84874B811B58FA0600BD25A0 /* CoreDataStackManager.swift */; };
 		84874B861B58FA4500BD25A0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84874B841B58FA4500BD25A0 /* Model.xcdatamodeld */; };
@@ -59,7 +59,7 @@
 		84874B721B54E81700BD25A0 /* Partner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Partner.swift; sourceTree = "<group>"; };
 		84874B741B54E93100BD25A0 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		84874B761B569DAC00BD25A0 /* PartnerDetailInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartnerDetailInfo.swift; sourceTree = "<group>"; };
-		84874B7B1B57D8BA00BD25A0 /* PartnerDetailInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartnerDetailInfoCell.swift; sourceTree = "<group>"; };
+		84874B7B1B57D8BA00BD25A0 /* HeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
 		84874B7D1B58EE9100BD25A0 /* ContactInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactInfo.swift; sourceTree = "<group>"; };
 		84874B811B58FA0600BD25A0 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		84874B851B58FA4500BD25A0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 				84874B7D1B58EE9100BD25A0 /* ContactInfo.swift */,
 				84874B701B53D2E000BD25A0 /* PartnersViewController.swift */,
 				84874B761B569DAC00BD25A0 /* PartnerDetailInfo.swift */,
-				84874B7B1B57D8BA00BD25A0 /* PartnerDetailInfoCell.swift */,
+				84874B7B1B57D8BA00BD25A0 /* HeaderCell.swift */,
 				84C27AC91B5D1BCB00DE8A5D /* ContactInfoCell.swift */,
 				84874B4B1B53D14800BD25A0 /* Images.xcassets */,
 				84874B4D1B53D14800BD25A0 /* LaunchScreen.xib */,
@@ -291,7 +291,7 @@
 				84874B771B569DAC00BD25A0 /* PartnerDetailInfo.swift in Sources */,
 				84874B711B53D2E000BD25A0 /* PartnersViewController.swift in Sources */,
 				84874B421B53D14800BD25A0 /* AppDelegate.swift in Sources */,
-				84874B7C1B57D8BA00BD25A0 /* PartnerDetailInfoCell.swift in Sources */,
+				84874B7C1B57D8BA00BD25A0 /* HeaderCell.swift in Sources */,
 				84874B691B53D1BD00BD25A0 /* ODataCollectionManager.swift in Sources */,
 				84874B731B54E81700BD25A0 /* Partner.swift in Sources */,
 			);

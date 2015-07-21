@@ -1,5 +1,5 @@
 //
-//  PartnerDetailInfoCell.swift
+//  HeaderCell.swift
 //  Partners
 //
 //  Created by Admin on 16.07.15.
@@ -9,13 +9,12 @@
 import Foundation
 import UIKit
 
-class PartnerDetailInfoCell: UITableViewCell {
+class HeaderCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var partnerLabel: UILabel!
     
-    @IBOutlet weak var imageViewIcon: UIImageView!
+    
+    @IBOutlet weak var addContact: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

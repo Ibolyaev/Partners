@@ -8,11 +8,22 @@
 
 import Foundation
 import UIKit
+import AddressBookUI
 
-class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableViewDelegate {
+class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableViewDelegate,ABUnknownPersonViewControllerDelegate {
 
     var partner: Partner?
     var contactInfo: NSArray?
+    
+    lazy var addressBook: ABAddressBookRef = {
+        var error: Unmanaged<CFError>?
+        return ABAddressBookCreateWithOptions(nil,
+            &error).takeRetainedValue() as ABAddressBookRef
+        }()
+    
+    func unknownPersonViewController(unknownCardViewController: ABUnknownPersonViewController!, didResolveToPerson person: ABRecord!) {
+        self.navigationController?.popToViewController(self, animated: false)
+    }
     
     override func viewWillAppear(animated: Bool) {
         
@@ -21,9 +32,8 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
         self.navigationItem.title = partner!.name
         
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 88.0
+        tableView.estimatedRowHeight = 44.0
         tableView.separatorInset = UIEdgeInsetsZero
-        
         
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -35,33 +45,44 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
         }
         
     }
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    
+
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        if indexPath.row == 0 {
-           var cell = self.tableView.dequeueReusableCellWithIdentifier("PartnerDetailInfoCell", forIndexPath: indexPath) as! PartnerDetailInfoCell
-            return configurePartnerCell(cell,indexPath: indexPath)
-        }else{
-           var cell = self.tableView.dequeueReusableCellWithIdentifier("ContactInfoCell", forIndexPath: indexPath) as! ContactInfoCell
-            return configureContactInfoCell(cell,indexPath: indexPath)
-        }
-        
+        return 88.0
         
     }
     
-    /*override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        if indexPath.row == 0 {
-            return 88.0
-        }else{
-            return 44.0
-        }
+        let  headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! HeaderCell
         
-    }*/
+        headerCell.titleLabel.text = partner?.name
+        headerCell.addContact.addTarget(self, action: "addContact:", forControlEvents: UIControlEvents.TouchUpInside)
+        //headerCell.addconta
+        /*switch (section) {
+        case 0:
+            headerCell.titleLabel.text = partner?.name
+            
+        default:
+            headerCell.headerLabel.text = "Other";
+        }*/
+        
+        return headerCell
+        
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var cell = self.tableView.dequeueReusableCellWithIdentifier("ContactInfoCell", forIndexPath: indexPath) as! ContactInfoCell
+        return configureContactInfoCell(cell,indexPath: indexPath)
+        
+    }
     
     func configureContactInfoCell(cell:ContactInfoCell,indexPath: NSIndexPath) -> UITableViewCell {
         cell.subtitleLabel.text = "testor"
         
-        
         if let contactInfo = contactInfo {
             var elementOfcontactInfo = contactInfo.objectAtIndex(indexPath.row) as! ContactInfo
             
@@ -69,10 +90,10 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
             case "Телефон":
                 cell.titleLabel.text = elementOfcontactInfo.telephoneNumber
                 
-                cell.imageView?.image = UIImage(named: "Phone-32")
+                cell.imageViewIcon?.image = UIImage(named: "Phone-32")
             case "АдресЭлектроннойПочты":
                 cell.titleLabel.text = elementOfcontactInfo.info
-                cell.imageView?.image = UIImage(named: "Message-32")
+                cell.imageViewIcon?.image = UIImage(named: "Message-32")
             default:
                 cell.titleLabel.text = ""
             }
@@ -82,32 +103,87 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
         return cell
         
     }
-
-    func configurePartnerCell(cell:PartnerDetailInfoCell,indexPath: NSIndexPath) -> UITableViewCell {
+    func createMultiStringRef() -> ABMutableMultiValueRef {
+        let propertyType: NSNumber = kABMultiStringPropertyType
+        return Unmanaged.fromOpaque(ABMultiValueCreateMutable(propertyType.unsignedIntValue).toOpaque()).takeUnretainedValue() as NSObject as ABMultiValueRef
+    }
+    func addNewContact() {
         
-        cell.subtitleLabel.text = "testor"
+        var abNew = ABUnknownPersonViewController()
         
+        let person: ABRecordRef = ABPersonCreate().takeRetainedValue()
         
-        if let contactInfo = contactInfo {
-            var elementOfcontactInfo = contactInfo.objectAtIndex(indexPath.row) as! ContactInfo
-            cell.partnerLabel.text = elementOfcontactInfo.partner?.name
+        let couldSetFirstName = ABRecordSetValue(person,
+            kABPersonFirstNameProperty,
+            partner?.name as! CFTypeRef,
+            nil)
+        
+        if let partner = partner {
             
-            switch elementOfcontactInfo.typeContact {
-            case "Телефон":
-                cell.titleLabel.text = elementOfcontactInfo.telephoneNumber
+            for contactInformation in partner.contactInfo {
                 
-                cell.imageViewIcon.image = UIImage(named: "Phone-32")
-            case "АдресЭлектроннойПочты":
-                cell.titleLabel.text = elementOfcontactInfo.info
-                cell.imageViewIcon.image = UIImage(named: "Message-32")
-            default:
-                cell.titleLabel.text = ""
+                switch contactInformation.typeContact {
+                case "Телефон":
+                    let propertyType: NSNumber = kABMultiStringPropertyType
+                    
+                    var phoneNumbers: ABMutableMultiValueRef =  createMultiStringRef()
+                    var phone = ((contactInformation.telephoneNumber).stringByReplacingOccurrencesOfString(" ", withString: "") as NSString)
+                    
+                    ABMultiValueAddValueAndLabel(phoneNumbers, phone, kABPersonPhoneMainLabel, nil)
+                    ABRecordSetValue(person, kABPersonPhoneProperty, phoneNumbers, nil)
+
+                    
+                case "АдресЭлектроннойПочты":
+                    let addr:ABMultiValue = ABMultiValueCreateMutable(
+                        ABPropertyType(kABStringPropertyType)).takeRetainedValue()
+                    ABMultiValueAddValueAndLabel(addr, contactInformation.info, kABHomeLabel, nil)
+                    ABRecordSetValue(person, kABPersonEmailProperty, addr, nil)
+                    
+                default:
+                    continue
+                }
+               
             }
+        }
+        
+        abNew.message = "Create new contact"
+        abNew.displayedPerson = person
+        abNew.addressBook = self.addressBook
+        abNew.allowsActions = false
+        abNew.allowsAddingToAddressBook = true
+        abNew.unknownPersonViewDelegate = self
+        
+        self.navigationController?.pushViewController(abNew, animated: true)
+        
+    }
+    
+    func addContact(sender: UIButton) {
+        
+        switch ABAddressBookGetAuthorizationStatus(){
+        case .Authorized:
+            print("Already authorized")
+            addNewContact()
+        case .Denied:
+            print("You are denied access to address book")
+            
+        case .NotDetermined:
+            ABAddressBookRequestAccessWithCompletion(addressBook,
+                {granted, error in
+                    
+                    if granted{
+                        print("Access is granted")
+                        self.addNewContact()
+                    } else {
+                        print("Access is not granted")
+                    }
+                    
+            })
+        case .Restricted:
+            print("Access is restricted")
             
         }
         
-        return cell
-
+        
     }
     
     func callAction(elementOfcontactInfo:ContactInfo) {
@@ -119,7 +195,6 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
             let url = NSURL(string: phone)
             UIApplication.sharedApplication().openURL(url!)
             
-            
         case "АдресЭлектроннойПочты":
             let email = elementOfcontactInfo.info
             
@@ -130,7 +205,6 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
         default:
             break
         }
-
         
     }
     
@@ -149,10 +223,8 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
         if let contactInfo = contactInfo {
             callAction(contactInfo.objectAtIndex(indexPath.row) as! ContactInfo)
         }
-
         
     }
-    
-
+  
 }
 

@@ -18,6 +18,7 @@ class Partner : NSManagedObject {
     struct Keys {
         static let Name = "Description"
         static let RefKey = "Ref_Key"
+        
     }
     
     
