@@ -37,10 +37,19 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="searchDisplayController" destination="oYu-8V-uhd" id="hwp-2k-sEy"/>
                         <segue destination="dZk-LA-QvM" kind="show" identifier="segueToDetailView" id="TYg-0k-J24"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fq0-ba-p4l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="oYu-8V-uhd">
+                    <connections>
+                        <outlet property="delegate" destination="OB0-31-tn4" id="cKa-iE-xNf"/>
+                        <outlet property="searchContentsController" destination="OB0-31-tn4" id="Qlv-Sh-Ht9"/>
+                        <outlet property="searchResultsDataSource" destination="OB0-31-tn4" id="Hng-eb-VHJ"/>
+                        <outlet property="searchResultsDelegate" destination="OB0-31-tn4" id="mXf-dO-56u"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="821" y="-442"/>
         </scene>

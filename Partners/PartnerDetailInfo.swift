@@ -60,15 +60,7 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
         
         headerCell.titleLabel.text = partner?.name
         headerCell.addContact.addTarget(self, action: "addContact:", forControlEvents: UIControlEvents.TouchUpInside)
-        //headerCell.addconta
-        /*switch (section) {
-        case 0:
-            headerCell.titleLabel.text = partner?.name
-            
-        default:
-            headerCell.headerLabel.text = "Other";
-        }*/
-        
+                
         return headerCell
         
     }
@@ -81,17 +73,17 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
     }
     
     func configureContactInfoCell(cell:ContactInfoCell,indexPath: NSIndexPath) -> UITableViewCell {
-        cell.subtitleLabel.text = "testor"
+        
         
         if let contactInfo = contactInfo {
             var elementOfcontactInfo = contactInfo.objectAtIndex(indexPath.row) as! ContactInfo
-            
+            cell.subtitleLabel.text = elementOfcontactInfo.kindOfCOntact
             switch elementOfcontactInfo.typeContact {
-            case "Телефон":
+            case ContactInfo.Keys.Telephone:
                 cell.titleLabel.text = elementOfcontactInfo.telephoneNumber
                 
                 cell.imageViewIcon?.image = UIImage(named: "Phone-32")
-            case "АдресЭлектроннойПочты":
+            case ContactInfo.Keys.Email:
                 cell.titleLabel.text = elementOfcontactInfo.info
                 cell.imageViewIcon?.image = UIImage(named: "Message-32")
             default:
@@ -123,7 +115,7 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
             for contactInformation in partner.contactInfo {
                 
                 switch contactInformation.typeContact {
-                case "Телефон":
+                case ContactInfo.Keys.Telephone:
                     let propertyType: NSNumber = kABMultiStringPropertyType
                     
                     var phoneNumbers: ABMutableMultiValueRef =  createMultiStringRef()
@@ -133,7 +125,7 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
                     ABRecordSetValue(person, kABPersonPhoneProperty, phoneNumbers, nil)
 
                     
-                case "АдресЭлектроннойПочты":
+                case ContactInfo.Keys.Email:
                     let addr:ABMultiValue = ABMultiValueCreateMutable(
                         ABPropertyType(kABStringPropertyType)).takeRetainedValue()
                     ABMultiValueAddValueAndLabel(addr, contactInformation.info, kABHomeLabel, nil)

@@ -20,7 +20,11 @@ class ContactInfo : NSManagedObject {
         static let Info = "Представление"
         static let TelephoneNumber = "НомерТелефона"
         static let TypeContact = "Тип"
+        static let KindOfCOntact = "Вид"
         static let RefKey = "Ref_Key"
+        
+        static let Telephone = "Телефон"
+        static let Email = "АдресЭлектроннойПочты"
         
     }
     
@@ -28,6 +32,7 @@ class ContactInfo : NSManagedObject {
     @NSManaged var refKey: String
     @NSManaged var typeContact: String
     @NSManaged var telephoneNumber: String
+    @NSManaged var kindOfCOntact: String
     @NSManaged var person: Person?
     @NSManaged var partner: Partner?
     
@@ -48,7 +53,7 @@ class ContactInfo : NSManagedObject {
         typeContact = dictionary[Keys.TypeContact] as! String
         
         refKey = dictionary[Keys.RefKey] as! String
-        
+        kindOfCOntact = dictionary[Keys.KindOfCOntact] as! String
         
         
         

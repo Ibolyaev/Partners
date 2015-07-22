@@ -10,23 +10,30 @@ import Foundation
 import UIKit
 import CoreData
 
-class PartnersViewController: UITableViewController, NSFetchedResultsControllerDelegate, ODataCollectionDelegate, UITableViewDataSource, UITableViewDelegate {
+class PartnersViewController: UITableViewController, NSFetchedResultsControllerDelegate, ODataCollectionDelegate, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating,UISearchControllerDelegate {
     
     var jsonResault: NSArray?
+    var resultSearchController = UISearchController()
     
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        fetchedResultsController.performFetch(nil)
-        fetchedResultsController.delegate = self
-        
+    var searchResultsController: NSFetchedResultsController?
+    
+    var currentResultsController: NSFetchedResultsController {
+        get {
+            
+            if let searchResultsController  = self.searchResultsController {
+                return searchResultsController
+            }
+            
+            return fetchedResultsController
+        }
     }
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
+        
         
         let fetchRequest = NSFetchRequest(entityName: "Partner")
         
@@ -42,6 +49,41 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         }()
     
 
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        fetchedResultsController.performFetch(nil)
+        fetchedResultsController.delegate = self
+        
+        self.resultSearchController = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.dimsBackgroundDuringPresentation = false
+            controller.searchBar.sizeToFit()
+            controller.delegate = self
+            
+            self.tableView.tableHeaderView = controller.searchBar
+            
+            return controller
+        })()
+        
+        var refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: Selector("loadResaults"), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl = refreshControl
+        
+        // Reload the table
+        self.tableView.reloadData()
+
+    }
+    
+    func loadResaults() {
+        tableView.reloadData()
+        refreshControl?.endRefreshing()
+    }
+
+    
     @IBAction func loadResaultsTouchUpInside(sender: UIBarButtonItem) {
         var filter = OdataFilter()
         var dataCollection = ODataCollectionManager()
@@ -52,16 +94,49 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-    
+        
         var secondViewController : PartnerDetailInfo = segue.destinationViewController as! PartnerDetailInfo
         
         var indexPath = tableView.indexPathForSelectedRow() //get index of data for selected row
         
-        let partner: AnyObject = fetchedResultsController.objectAtIndexPath(indexPath!)
+        let partner: AnyObject = currentResultsController.objectAtIndexPath(indexPath!)
         
         secondViewController.partner = partner as? Partner
         
+        resultSearchController.active = false
+        
     }
+
+    
+    // MARK: UISearchResultsUpdating
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Partner")
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        
+        let firstNamePredicate = NSPredicate(format: "name CONTAINS[cd] %@", searchController.searchBar.text.lowercaseString)
+        
+        let predicate = NSCompoundPredicate.orPredicateWithSubpredicates([firstNamePredicate])
+        
+        fetchRequest.predicate = predicate
+        
+        searchResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        searchResultsController?.performFetch(nil)
+        
+        self.tableView.reloadData()
+
+    }
+    
+    // MARK: UISearchControllerDelegate
+    
+    
+    func didDismissSearchController(searchController: UISearchController) {
+        searchResultsController = nil
+        self.tableView.reloadData()
+    }
+    
+    // MARK: tableView
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -73,7 +148,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         
         var cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "contactCell")
         
-        let partner: AnyObject = fetchedResultsController.objectAtIndexPath(indexPath)
+        let partner: AnyObject = currentResultsController.objectAtIndexPath(indexPath)
         
         cell.textLabel?.text =  partner.name
         
@@ -83,35 +158,37 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     
     override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
         
-        return fetchedResultsController.sectionForSectionIndexTitle(title, atIndex: index)
+        return currentResultsController.sectionForSectionIndexTitle(title, atIndex: index)
         
     }
     
     override func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]! {
         
-        return self.fetchedResultsController.sectionIndexTitles
+        return self.currentResultsController.sectionIndexTitles
         
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        if let sections = fetchedResultsController.sections {
+        if let sections = currentResultsController.sections {
             
-            let sectionInfo = sections[section] as! NSFetchedResultsSectionInfo
-            var name = sectionInfo.indexTitle
+            if let sectionInfo = sections[section] as? NSFetchedResultsSectionInfo {
+                
+                if let name = sectionInfo.name {
+                    return sectionInfo.indexTitle
+                }
+                
+            }
             
-                        
-            return sectionInfo.indexTitle
         }
         
         return ""
         
-
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        if let sections = fetchedResultsController.sections {
+        if let sections = currentResultsController.sections {
             return sections.count
         }
         
@@ -122,8 +199,8 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         var rows = 0
-        if self.fetchedResultsController.sections!.count > 0 {
-            var sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
+        if self.currentResultsController.sections!.count > 0 {
+            var sectionInfo = self.currentResultsController.sections![section] as! NSFetchedResultsSectionInfo
             rows = sectionInfo.numberOfObjects
         }
         return rows
@@ -196,8 +273,6 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
                 }
             }
             
-            //partner.contactInfo = contactInfoArray
-            
             CoreDataStackManager.sharedInstance().saveContext()
             
             
@@ -210,5 +285,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         }
     }
     
-
 }
+
+
+
