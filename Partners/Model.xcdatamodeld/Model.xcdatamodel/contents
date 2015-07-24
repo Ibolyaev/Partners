@@ -18,12 +18,13 @@
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="refKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="role" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="contactInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContactInfo" inverseName="person" inverseEntity="ContactInfo" syncable="YES"/>
         <relationship name="partner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Partner" inverseName="persons" inverseEntity="Partner" syncable="YES"/>
     </entity>
     <elements>
         <element name="ContactInfo" positionX="405" positionY="-78" width="128" height="150"/>
         <element name="Partner" positionX="52" positionY="-168" width="128" height="105"/>
-        <element name="Person" positionX="63" positionY="12" width="128" height="105"/>
+        <element name="Person" positionX="63" positionY="12" width="128" height="120"/>
     </elements>
 </model>

@@ -3,32 +3,25 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "Partners.PartnerDetailInfo.callAction (Partners.PartnerDetailInfo)(Partners.ContactInfo) -&gt; ():PartnerDetailInfo.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "elementOfcontactInfo.typeContact">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "Partners.PartnersViewController.didDismissSearchController (Partners.PartnersViewController)(ObjectiveC.UISearchController) -&gt; ():PartnersViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "Partners.PartnerDetailInfo.tableView (Partners.PartnerDetailInfo)(ObjectiveC.UITableView, cellForRowAtIndexPath : ObjectiveC.NSIndexPath) -&gt; ObjectiveC.UITableViewCell:PartnerDetailInfo.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "contactInfo[0]">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "Partners.PartnersViewController.didRecieveResponse (Partners.PartnersViewController)(ObjectiveC.NSDictionary) -&gt; ():PartnersViewController.swift">
          <PersistentStrings>
+            <PersistentString
+               value = "&quot;/\(odataType)?&quot;">
+            </PersistentString>
+            <PersistentString
+               value = "jsonResault">
+            </PersistentString>
             <PersistentString
                value = "partnersByName">
             </PersistentString>
             <PersistentString
-               value = "jsonResault">
+               value = "results">
+            </PersistentString>
+            <PersistentString
+               value = "Partner.getCollectionName()">
+            </PersistentString>
+            <PersistentString
+               value = "&quot;\(odataType)?&quot;">
             </PersistentString>
             <PersistentString
                value = "arrayOfElements">
@@ -47,15 +40,12 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "Partners.PartnerDetailInfo.configurePartnerCell (Partners.PartnerDetailInfo)(Partners.PartnerDetailInfoCell, indexPath : ObjectiveC.NSIndexPath) -&gt; ObjectiveC.UITableViewCell:PartnerDetailInfo.swift">
+         contextName = "Partners.ContactInfo.init (Partners.ContactInfo.Type)(dictionary : Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;, context : ObjectiveC.NSManagedObjectContext) -&gt; Partners.ContactInfo:ContactInfo.swift">
          <PersistentStrings>
             <PersistentString
-               value = "UIImage(named: &quot;Phone-32&quot;)">
+               value = "refKey">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "Partners.PartnersViewController.currentResultsController.getter : ObjectiveC.NSFetchedResultsController:PartnersViewController.swift">
       </ContextState>
       <ContextState
          contextName = "Partners.PartnersViewController.tableView (Partners.PartnersViewController)(ObjectiveC.UITableView, cellForRowAtIndexPath : ObjectiveC.NSIndexPath) -&gt; ObjectiveC.UITableViewCell:PartnersViewController.swift">
@@ -66,18 +56,26 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "Partners.ContactInfo.init (Partners.ContactInfo.Type)(dictionary : Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;, context : ObjectiveC.NSManagedObjectContext) -&gt; Partners.ContactInfo:ContactInfo.swift">
+         contextName = "Partners.ODataCollectionManager._constructOdataRequestURL (Partners.ODataCollectionManager)() -&gt; ObjectiveC.NSString:ODataCollectionManager.swift">
          <PersistentStrings>
             <PersistentString
-               value = "refKey">
+               value = "&quot;\(address!)/\(baseName!)/odata/standard.odata&quot; + (self._collection as String) + (self._formatString as String)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "Partners.PartnerDetailInfo.tableView (Partners.PartnerDetailInfo)(ObjectiveC.UITableView, numberOfRowsInSection : Swift.Int) -&gt; Swift.Int:PartnerDetailInfo.swift">
+         contextName = "Partners.PartnerDetailInfo.callAction (Partners.PartnerDetailInfo)(Partners.ContactInfo) -&gt; ():PartnerDetailInfo.swift">
          <PersistentStrings>
             <PersistentString
-               value = "contactJSON">
+               value = "elementOfcontactInfo.typeContact">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Partners.PartnerDetailInfo.tableView (Partners.PartnerDetailInfo)(ObjectiveC.UITableView, cellForRowAtIndexPath : ObjectiveC.NSIndexPath) -&gt; ObjectiveC.UITableViewCell:PartnerDetailInfo.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "contactInfo[0]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -85,26 +83,21 @@
          contextName = "Partners.PartnersViewController.tableView (Partners.PartnersViewController)(ObjectiveC.UITableView, titleForHeaderInSection : Swift.Int) -&gt; Swift.Optional&lt;Swift.String&gt;:PartnersViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "sectionInfo.numberOfObjects">
+               value = "sectionInfo.indexTitle">
             </PersistentString>
             <PersistentString
                value = "sectionInfo.name">
             </PersistentString>
             <PersistentString
-               value = "sectionInfo.indexTitle">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "Partners.Partner.init (Partners.Partner.Type)(contactInfo : Swift.Array&lt;Partners.ContactInfo&gt;, dictionary : Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;, context : ObjectiveC.NSManagedObjectContext) -&gt; Partners.Partner:Partner.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "contactInfo">
+               value = "sectionInfo.numberOfObjects">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "Partners.PartnersViewController.willDismissSearchController (Partners.PartnersViewController)(ObjectiveC.UISearchController) -&gt; ():PartnersViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Partners.ODataCollectionManager.connectionDidFinishLoading (Partners.ODataCollectionManager)(Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.NSURLConnection&gt;) -&gt; ():ODataCollectionManager.swift">
       </ContextState>
       <ContextState
          contextName = "Partners.PartnerDetailInfo.viewWillAppear (Partners.PartnerDetailInfo)(Swift.Bool) -&gt; ():PartnerDetailInfo.swift">
@@ -119,6 +112,66 @@
                value = "partner!.contactInfo">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Partners.PartnerDetailInfo.configurePartnerCell (Partners.PartnerDetailInfo)(Partners.PartnerDetailInfoCell, indexPath : ObjectiveC.NSIndexPath) -&gt; ObjectiveC.UITableViewCell:PartnerDetailInfo.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "UIImage(named: &quot;Phone-32&quot;)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Partners.PartnerDetailInfo.tableView (Partners.PartnerDetailInfo)(ObjectiveC.UITableView, numberOfRowsInSection : Swift.Int) -&gt; Swift.Int:PartnerDetailInfo.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "contactJSON">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Partners.Partner.init (Partners.Partner.Type)(contactInfo : Swift.Array&lt;Partners.ContactInfo&gt;, dictionary : Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;, context : ObjectiveC.NSManagedObjectContext) -&gt; Partners.Partner:Partner.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "contactInfo">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Partners.PartnersViewController.didDismissSearchController (Partners.PartnersViewController)(ObjectiveC.UISearchController) -&gt; ():PartnersViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Partners.PartnersViewController.currentResultsController.getter : ObjectiveC.NSFetchedResultsController:PartnersViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Partners.PartnerDetailInfo.configureContactInfoCell (Partners.PartnerDetailInfo)(Partners.ContactInfoCell, indexPath : ObjectiveC.NSIndexPath) -&gt; ObjectiveC.UITableViewCell:PartnerDetailInfo.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "elementOfcontactInfo.kindOfCOntact">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Partners.ODataCollectionManager.connection (Partners.ODataCollectionManager)(ObjectiveC.NSURLConnection, didReceiveAuthenticationChallenge : ObjectiveC.NSURLAuthenticationChallenge) -&gt; ():ODataCollectionManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "LoginInformation.sharedInstance().login">
+            </PersistentString>
+            <PersistentString
+               value = "NSString(LoginInformation.sharedInstance().login) ">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Partners.PartnersViewController.(requestFailedWithError (Partners.PartnersViewController) -&gt; (ObjectiveC.NSString) -&gt; ()).(closure #1):PartnersViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "LoginInformation.sharedInstance()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "static Partners.Partner.alreadyInContext (Partners.Partner.Type)(Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;, context : ObjectiveC.NSManagedObjectContext) -&gt; Swift.Bool:Partner.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

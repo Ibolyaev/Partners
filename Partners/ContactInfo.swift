@@ -22,6 +22,7 @@ class ContactInfo : NSManagedObject {
         static let TypeContact = "Тип"
         static let KindOfCOntact = "Вид"
         static let RefKey = "Ref_Key"
+        static let ContactInfoText = "КонтактнаяИнформация"
         
         static let Telephone = "Телефон"
         static let Email = "АдресЭлектроннойПочты"
@@ -53,9 +54,40 @@ class ContactInfo : NSManagedObject {
         typeContact = dictionary[Keys.TypeContact] as! String
         
         refKey = dictionary[Keys.RefKey] as! String
-        kindOfCOntact = dictionary[Keys.KindOfCOntact] as! String
-        
+        //kindOfCOntact = dictionary[Keys.KindOfCOntact] as! String
+        kindOfCOntact = "test"
         
         
     }
+   
+
+    
+    class func loadUpdateInfo(partner:Partner, contactInfoJSON:NSArray?,context: NSManagedObjectContext) {
+        
+        
+        
+        if let contactInfoJSON = contactInfoJSON {
+            
+            // if its new partner witout contact info and in JSONdata we have something - create a new contact info
+            if partner.contactInfo.count != 0 && contactInfoJSON.count > 0 {
+                
+                //we need to update info becouse partner already have it
+                // cant say which info were updated so we delete it first out of context and upload new one
+                for el in partner.contactInfo {
+                    context.deleteObject(el)
+                }
+                
+            }
+            for el in contactInfoJSON {
+                
+                let contactInfo = ContactInfo(dictionary: el as! [String : AnyObject], context: context)
+                contactInfo.partner = partner
+                CoreDataStackManager.sharedInstance().saveContext()
+                
+            }
+            
+            
+        }
+    }
+
 }

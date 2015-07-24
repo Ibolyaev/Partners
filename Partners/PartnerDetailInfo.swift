@@ -77,7 +77,7 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
         
         if let contactInfo = contactInfo {
             var elementOfcontactInfo = contactInfo.objectAtIndex(indexPath.row) as! ContactInfo
-            cell.subtitleLabel.text = elementOfcontactInfo.kindOfCOntact
+            //cell.subtitleLabel.text = elementOfcontactInfo.kindOfCOntact
             switch elementOfcontactInfo.typeContact {
             case ContactInfo.Keys.Telephone:
                 cell.titleLabel.text = elementOfcontactInfo.telephoneNumber

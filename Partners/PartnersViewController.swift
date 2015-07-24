@@ -47,9 +47,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         return fetchedResultsController
         
         }()
-    
-
-
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,21 +77,47 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     }
     
     func loadResaults() {
-        tableView.reloadData()
-        refreshControl?.endRefreshing()
+        loadOdata()
+        dispatch_async(dispatch_get_main_queue()) {
+            
+            self.tableView.reloadData()
+            
+        }
+        
+    }
+    
+    func loadOdata() {
+        
+        var filter = OdataFilter()
+        var dataCollection = ODataCollectionManager()
+        
+        dataCollection.setCollectionName(Partner.getCollectionName())
+        
+        dataCollection.makeRequestToCollection(filter)
+        
+        //test
+        
+        
+        dataCollection.setCollectionName(Person.getCollectionName())
+        
+        dataCollection.makeRequestToCollection(filter)
+
+        
+        dataCollection._delegate = self
     }
 
     
     @IBAction func loadResaultsTouchUpInside(sender: UIBarButtonItem) {
-        var filter = OdataFilter()
-        var dataCollection = ODataCollectionManager()
-        
-        dataCollection.makeRequestToCollection(filter)
-        dataCollection._delegate = self
+        loadOdata()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    @IBAction func settingsTouch(sender: UIBarButtonItem) {
         
+        var ViewController = self.storyboard!.instantiateViewControllerWithIdentifier("SettingsViewController") as! SettingsViewController
+        presentViewController(ViewController, animated: true, completion: nil)
+        
+    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         var secondViewController : PartnerDetailInfo = segue.destinationViewController as! PartnerDetailInfo
         
@@ -109,6 +133,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
 
     
     // MARK: UISearchResultsUpdating
+    
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         
         let fetchRequest = NSFetchRequest(entityName: "Partner")
@@ -129,7 +154,6 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     }
     
     // MARK: UISearchControllerDelegate
-    
     
     func didDismissSearchController(searchController: UISearchController) {
         searchResultsController = nil
@@ -244,36 +268,112 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         }
     }
-
     
-    
-    func requestFailedWithError(error: NSString) {
+      func requestFailedWithError(error: NSString) {
         
+        if error == "You must provide a username and password in the settings app." {
+            var loginTextField: UITextField?
+            var passwordTextField: UITextField?
+            let alertController = UIAlertController(title: "Wrong password or login", message: "You must provide a username and password", preferredStyle: .Alert)
+            let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+                println("Ok Button Pressed")
+                if let login = loginTextField?.text {
+                   LoginInformation.sharedInstance().login = login
+                }
+                if let password = passwordTextField?.text {
+                   LoginInformation.sharedInstance().password = password
+                }
+                
+                self.loadResaults()
+            })
+            let cancel = UIAlertAction(title: "Cancel", style: .Cancel) { (action) -> Void in
+                println("Cancel Button Pressed")
+                self.refreshControl?.endRefreshing()
+            }
+            alertController.addAction(ok)
+            alertController.addAction(cancel)
+            alertController.addTextFieldWithConfigurationHandler { (textField) -> Void in
+                // Enter the textfiled customization code here.
+                loginTextField = textField
+                loginTextField?.placeholder = "Login"
+            }
+            alertController.addTextFieldWithConfigurationHandler { (textField) -> Void in
+                // Enter the textfiled customization code here.
+                passwordTextField = textField
+                passwordTextField?.placeholder = "Password"
+                passwordTextField?.secureTextEntry = true
+            }
+            
+            presentViewController(alertController, animated: true, completion: nil)
+        }else{
+           
+            displayError("Failed to load data", titleError: error as String)
+            self.refreshControl?.endRefreshing()
+        }
         
     }
     
+    func displayError(errorString: String?,titleError: String?) {
+        dispatch_async(dispatch_get_main_queue(), {
+            if let errorString = errorString {
+                
+                let alertController = UIAlertController(title: titleError, message: "\(errorString)", preferredStyle: .Alert)
+                
+                
+                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+                    // ...
+                }
+                alertController.addAction(OKAction)
+                
+                self.presentViewController(alertController, animated: true) {
+                    // ...
+                }
+            }
+        })
+    }
+
+    
     func didRecieveResponse(results: NSDictionary) {
         
-        
         jsonResault = JSON(results)?[key:"value"] as? NSArray
+        let odataMetadata = JSON(results)?[key:"odata.metadata"] as? NSString
+        
+        var odataType = ""
+        
+        if let odataMetadata = odataMetadata {
+            
+            let string = odataMetadata as String
+            
+            let needle: Character = "#"
+            if let idx = find(string, needle) {
+                let pos = distance(string.startIndex, idx)
+                
+                odataType = string.substringFromIndex(advance(string.startIndex,pos+1))
+                
+            }
+            else {
+                displayError("Unkown data type: \(odataType)", titleError: "Failed to load data")
+            }
+        }else{
+            displayError("Unkown data type: \(odataType)", titleError: "Failed to load data")
+        }
         
         for var i=0;i<jsonResault?.count; i++ {
             
-            var contactJSON = jsonResault?.objectAtIndex(i) as! JSONValue
-            let contactInfoJSON = contactJSON[key:"КонтактнаяИнформация"] as? NSArray
-            var contactInfoArray = [ContactInfo]()
-            let partner = Partner(dictionary: contactJSON as! [String : AnyObject], context: sharedContext)
-            CoreDataStackManager.sharedInstance().saveContext()
-            if let contactInfoJSON = contactInfoJSON {
-                for el in contactInfoJSON {
-                    let contactInfo = ContactInfo(dictionary: el as! [String : AnyObject], context: sharedContext)
-                    contactInfo.partner = partner
-                    CoreDataStackManager.sharedInstance().saveContext()
-                    contactInfoArray.append(contactInfo)
-                }
+            if Partner.getCollectionName() == "/\(odataType)?" {
+                
+                let contactJSON = jsonResault?.objectAtIndex(i) as! JSONValue
+                
+                let contactInfoJSON = contactJSON[key:ContactInfo.Keys.ContactInfoText] as? NSArray
+                
+                let partner = Partner.loadUpdateInfo(contactJSON as! [String : AnyObject], context: sharedContext)
+                
+                ContactInfo.loadUpdateInfo(partner, contactInfoJSON: contactInfoJSON, context: sharedContext)
+                
+                CoreDataStackManager.sharedInstance().saveContext()
+                self.refreshControl?.endRefreshing()
+
             }
-            
-            CoreDataStackManager.sharedInstance().saveContext()
             
             
             dispatch_async(dispatch_get_main_queue()) {

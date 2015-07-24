@@ -27,6 +27,9 @@ class ODataCollectionManager: NSObject, NSXMLParserDelegate {
     // oData components
     internal var _collection: NSString = "/Catalog_Партнеры?"
     
+    internal var timesOfdidReceiveAuthenticationChallenge: Int = 0
+    
+    
     // oData query filter
     internal let _formatString: NSString = "$format=json"     // We always use Json for efficiency.
     internal var _filter: OdataFilter = OdataFilter()
@@ -61,10 +64,13 @@ class ODataCollectionManager: NSObject, NSXMLParserDelegate {
     internal func _constructOdataRequestURL() -> NSString{
         
         // FIXME: Change the base URL.
-        //http://85.236.15.246/Tasks83/odata/standard.odata
+        //http://85.236.15.246/Demo_UT/odata/standard.odata
         // Always start as the Base URL with the collection and the format string.
-        //http://apps.1c-dn.com/sb/odata/standard.odata/Catalog_ContactPersons
-        var baseURL: NSString = "http://85.236.15.246/Demo_UT/odata/standard.odata" + (self._collection as String) + (self._formatString as String)
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let address = defaults.stringForKey("address")
+        let baseName = defaults.stringForKey("baseName")
+        
+        var baseURL: NSString = "\(address!)/\(baseName!)/odata/standard.odata" + (self._collection as String) + (self._formatString as String)
 
         
         // Finally we format all the values into the final URL.
@@ -126,11 +132,34 @@ class ODataCollectionManager: NSObject, NSXMLParserDelegate {
     // Called when authentication is required for the oData service.
     internal func connection(connection: NSURLConnection, didReceiveAuthenticationChallenge challenge: NSURLAuthenticationChallenge) {
         
+        //didReceiveAuthenticationChallenge always calls if we provide wrong login\pasword 
+        // we try to connect 3 times and after that send user a error messege
+        self.timesOfdidReceiveAuthenticationChallenge++
         // FIXME: Change the default username and password
-        var username: NSString = "test"
-        var password: NSString = "111"
+        /*var username: NSString = "test"
+        var password: NSString = "11"*/
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let demoMode = defaults.boolForKey("demoMode")
+        
+        var username:NSString = ""
+        var password:NSString = ""
+        
+        
+        if demoMode  {
+            
+            username = "test"
+            password = "111"
+            
+        }else{
+            
+            username = NSString(string: LoginInformation.sharedInstance().login)
+            password = NSString(string: LoginInformation.sharedInstance().password)
+        }
+        
+        
 
-        if (username.length == 0 || password.length == 0){
+        if (username.length == 0 || password.length == 0 || timesOfdidReceiveAuthenticationChallenge > 3)  {
             connection.cancel()
             self._delegate?.requestFailedWithError("You must provide a username and password in the settings app.")
         }
