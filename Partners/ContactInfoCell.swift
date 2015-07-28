@@ -12,7 +12,7 @@ import UIKit
 class ContactInfoCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
+    
     @IBOutlet weak var imageViewIcon: UIImageView!
     
     override func awakeFromNib() {

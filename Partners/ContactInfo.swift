@@ -59,10 +59,35 @@ class ContactInfo : NSManagedObject {
         
         
     }
-   
+    class func loadUpdateInfoPerson(person:Person, contactInfoJSON:NSArray?,context: NSManagedObjectContext) {
+                
+        if let contactInfoJSON = contactInfoJSON {
+            
+            // if its new partner witout contact info and in JSONdata we have something - create a new contact info
+            if person.contactInfo.count != 0 && contactInfoJSON.count > 0 {
+                
+                //we need to update info becouse partner already have it
+                // cant say which info were updated so we delete it first out of context and upload new one
+                for el in person.contactInfo {
+                    context.deleteObject(el)
+                }
+                
+            }
+            for el in contactInfoJSON {
+                
+                let contactInfo = ContactInfo(dictionary: el as! [String : AnyObject], context: context)
+                contactInfo.person = person
+                CoreDataStackManager.sharedInstance().saveContext()
+                
+            }
+            
+            
+        }
+    }
+
 
     
-    class func loadUpdateInfo(partner:Partner, contactInfoJSON:NSArray?,context: NSManagedObjectContext) {
+    class func loadUpdateInfoPartner(partner:Partner, contactInfoJSON:NSArray?,context: NSManagedObjectContext) {
         
         
         

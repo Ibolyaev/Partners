@@ -3,17 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "Message-32.png"
+      "filename" : "iTunesArtwork.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "Message-64.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "Message-100.png"
+      "filename" : "iTunesArtwork@2x.png"
     }
   ],
   "info" : {

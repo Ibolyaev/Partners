@@ -13,18 +13,19 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="refKey" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="contactInfo" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ContactInfo" inverseName="partner" inverseEntity="ContactInfo" syncable="YES"/>
-        <relationship name="persons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="partner" inverseEntity="Person" syncable="YES"/>
+        <relationship name="persons" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Person" inverseName="partner" inverseEntity="Person" syncable="YES"/>
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ownerRefKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="refKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="role" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="contactInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContactInfo" inverseName="person" inverseEntity="ContactInfo" syncable="YES"/>
-        <relationship name="partner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Partner" inverseName="persons" inverseEntity="Partner" syncable="YES"/>
+        <relationship name="contactInfo" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ContactInfo" inverseName="person" inverseEntity="ContactInfo" syncable="YES"/>
+        <relationship name="partner" maxCount="1" deletionRule="Nullify" destinationEntity="Partner" inverseName="persons" inverseEntity="Partner" syncable="YES"/>
     </entity>
     <elements>
         <element name="ContactInfo" positionX="405" positionY="-78" width="128" height="150"/>
         <element name="Partner" positionX="52" positionY="-168" width="128" height="105"/>
-        <element name="Person" positionX="63" positionY="12" width="128" height="120"/>
+        <element name="Person" positionX="63" positionY="12" width="128" height="135"/>
     </elements>
 </model>

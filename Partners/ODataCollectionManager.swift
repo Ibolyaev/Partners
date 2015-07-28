@@ -54,6 +54,7 @@ class ODataCollectionManager: NSObject, NSXMLParserDelegate {
         var connection: NSURLConnection = NSURLConnection(request: request, delegate: self,startImmediately: false)!
     
         println("Making request to OData service:  <**censored**> for demojam on stage")
+        
     
         connection.start()
     }
@@ -64,7 +65,7 @@ class ODataCollectionManager: NSObject, NSXMLParserDelegate {
     internal func _constructOdataRequestURL() -> NSString{
         
         // FIXME: Change the base URL.
-        //http://85.236.15.246/Demo_UT/odata/standard.odata
+        
         // Always start as the Base URL with the collection and the format string.
         let defaults = NSUserDefaults.standardUserDefaults()
         let address = defaults.stringForKey("address")
