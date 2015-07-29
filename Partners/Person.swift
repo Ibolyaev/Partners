@@ -64,8 +64,10 @@ class Person : NSManagedObject {
         
         let fetchRequest = NSFetchRequest(entityName: "Partner")
         
+        
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "refKey", ascending: true)]
         
+            
         let firstNamePredicate = NSPredicate(format: "refKey == %@", ownerRefKey)
         
         let predicate = NSCompoundPredicate.orPredicateWithSubpredicates([firstNamePredicate])

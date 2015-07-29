@@ -87,7 +87,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="811" y="-416"/>
+            <point key="canvasLocation" x="591" y="-442"/>
         </scene>
         <!--Partner Detail Info-->
         <scene sceneID="OdY-2S-Vur">
@@ -190,7 +190,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AuB-dh-huq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1414" y="-442"/>
+            <point key="canvasLocation" x="1174" y="-442"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="pc0-SL-ydT">

@@ -82,6 +82,8 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     func loadOdata() {
         
         var filter = OdataFilter()
+        filter.addFilter("DeletionMark", filterValue: "false", filterOperand: "eq", clauseOperand: "")
+        
         var dataCollection = ODataCollectionManager()
         
         dataCollection.setCollectionName(Partner.getCollectionName())
@@ -367,15 +369,21 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
             if let jsonResault = jsonResault {
                loadPartnersInfo(jsonResault)
             }
-            //we need to download persons info after we load partners
-            var filter = OdataFilter()
-            var dataCollection = ODataCollectionManager()
-            dataCollection.setCollectionName(Person.getCollectionName())
-            
-            dataCollection.makeRequestToCollection(filter)
-            
-            dataCollection._delegate = self
+            dispatch_async(dispatch_get_main_queue()) {
+                CoreDataStackManager.sharedInstance().saveContext()
+                //we need to download persons info after we load partners
+                var filter = OdataFilter()
+                var dataCollection = ODataCollectionManager()
+                dataCollection.setCollectionName(Person.getCollectionName())
+                
+                dataCollection.makeRequestToCollection(filter)
+                
+                dataCollection._delegate = self
 
+                
+            }
+
+            
         }
         
         if Person.getCollectionName() == "/\(odataType)?" {
