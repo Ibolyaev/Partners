@@ -116,16 +116,8 @@
 				84874B6E1B53D1C600BD25A0 /* ODataParser */,
 				84874B411B53D14800BD25A0 /* AppDelegate.swift */,
 				84874B481B53D14800BD25A0 /* Main.storyboard */,
-				84874B721B54E81700BD25A0 /* Partner.swift */,
-				84CBBCC31B60F3240044162E /* LoginInformation.swift */,
-				84874B741B54E93100BD25A0 /* Person.swift */,
-				84874B7D1B58EE9100BD25A0 /* ContactInfo.swift */,
-				84874B701B53D2E000BD25A0 /* PartnersViewController.swift */,
-				84C27ACB1B5FC82400DE8A5D /* SettingsViewController.swift */,
-				84874B761B569DAC00BD25A0 /* PartnerDetailInfo.swift */,
-				84874B7B1B57D8BA00BD25A0 /* HeaderCell.swift */,
-				84C27AC91B5D1BCB00DE8A5D /* ContactInfoCell.swift */,
-				84C9443B1B68B22200FF1954 /* PartnerInfoCell.swift */,
+				84C9443D1B68D31D00FF1954 /* Model */,
+				84C9443E1B68D33700FF1954 /* Controller */,
 				84874B4B1B53D14800BD25A0 /* Images.xcassets */,
 				84874B4D1B53D14800BD25A0 /* LaunchScreen.xib */,
 				84874B431B53D14800BD25A0 /* Partners.xcdatamodeld */,
@@ -185,6 +177,38 @@
 				84874B811B58FA0600BD25A0 /* CoreDataStackManager.swift */,
 			);
 			name = CoreData;
+			sourceTree = "<group>";
+		};
+		84C9443D1B68D31D00FF1954 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				84CBBCC31B60F3240044162E /* LoginInformation.swift */,
+				84874B7D1B58EE9100BD25A0 /* ContactInfo.swift */,
+				84874B741B54E93100BD25A0 /* Person.swift */,
+				84874B721B54E81700BD25A0 /* Partner.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		84C9443E1B68D33700FF1954 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				84C9443F1B68D35300FF1954 /* CellViewController */,
+				84874B701B53D2E000BD25A0 /* PartnersViewController.swift */,
+				84C27ACB1B5FC82400DE8A5D /* SettingsViewController.swift */,
+				84874B761B569DAC00BD25A0 /* PartnerDetailInfo.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		84C9443F1B68D35300FF1954 /* CellViewController */ = {
+			isa = PBXGroup;
+			children = (
+				84874B7B1B57D8BA00BD25A0 /* HeaderCell.swift */,
+				84C27AC91B5D1BCB00DE8A5D /* ContactInfoCell.swift */,
+				84C9443B1B68B22200FF1954 /* PartnerInfoCell.swift */,
+			);
+			name = CellViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
