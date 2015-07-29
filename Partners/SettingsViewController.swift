@@ -12,15 +12,34 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
-   
+   var tapRecognizer: UITapGestureRecognizer? = nil
     
     @IBOutlet weak var addresstextField: UITextField!
     @IBOutlet weak var baseNameTextField: UITextField!
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         addresstextField.text = "http://"
+        self.addKeyboardDismissRecognizer()
     }
     
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.removeKeyboardDismissRecognizer()
+        
+    }
+    
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        /* Configure tap recognizer */
+        tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tapRecognizer?.numberOfTapsRequired = 1
+    }
+
     @IBAction func connectTouchUpInside(sender: UIButton) {
         
         if verifyUrl(addresstextField.text) {
@@ -41,6 +60,21 @@ class SettingsViewController: UIViewController {
         defaults.setObject(true, forKey: "demoMode")
         
     }
+    
+    // MARK: - Keyboard Fixes
+    
+    func addKeyboardDismissRecognizer() {
+        self.view.addGestureRecognizer(tapRecognizer!)
+    }
+    
+    func removeKeyboardDismissRecognizer() {
+        self.view.removeGestureRecognizer(tapRecognizer!)
+    }
+    
+    func handleSingleTap(recognizer: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+
     func fileExists(url : NSURL!) -> Bool {
         
         let req = NSMutableURLRequest(URL: url)
