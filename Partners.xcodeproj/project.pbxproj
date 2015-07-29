@@ -28,6 +28,7 @@
 		84874B861B58FA4500BD25A0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84874B841B58FA4500BD25A0 /* Model.xcdatamodeld */; };
 		84C27ACA1B5D1BCB00DE8A5D /* ContactInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C27AC91B5D1BCB00DE8A5D /* ContactInfoCell.swift */; };
 		84C27ACC1B5FC82400DE8A5D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C27ACB1B5FC82400DE8A5D /* SettingsViewController.swift */; };
+		84C9443C1B68B22300FF1954 /* PartnerInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C9443B1B68B22200FF1954 /* PartnerInfoCell.swift */; };
 		84CBBCC41B60F3240044162E /* LoginInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CBBCC31B60F3240044162E /* LoginInformation.swift */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,7 @@
 		84874B851B58FA4500BD25A0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		84C27AC91B5D1BCB00DE8A5D /* ContactInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactInfoCell.swift; sourceTree = "<group>"; };
 		84C27ACB1B5FC82400DE8A5D /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		84C9443B1B68B22200FF1954 /* PartnerInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartnerInfoCell.swift; sourceTree = "<group>"; };
 		84CBBCC31B60F3240044162E /* LoginInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginInformation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,6 +125,7 @@
 				84874B761B569DAC00BD25A0 /* PartnerDetailInfo.swift */,
 				84874B7B1B57D8BA00BD25A0 /* HeaderCell.swift */,
 				84C27AC91B5D1BCB00DE8A5D /* ContactInfoCell.swift */,
+				84C9443B1B68B22200FF1954 /* PartnerInfoCell.swift */,
 				84874B4B1B53D14800BD25A0 /* Images.xcassets */,
 				84874B4D1B53D14800BD25A0 /* LaunchScreen.xib */,
 				84874B431B53D14800BD25A0 /* Partners.xcdatamodeld */,
@@ -297,6 +300,7 @@
 				84874B6B1B53D1BD00BD25A0 /* ODataServiceManager.swift in Sources */,
 				84874B771B569DAC00BD25A0 /* PartnerDetailInfo.swift in Sources */,
 				84874B711B53D2E000BD25A0 /* PartnersViewController.swift in Sources */,
+				84C9443C1B68B22300FF1954 /* PartnerInfoCell.swift in Sources */,
 				84874B421B53D14800BD25A0 /* AppDelegate.swift in Sources */,
 				84CBBCC41B60F3240044162E /* LoginInformation.swift in Sources */,
 				84874B7C1B57D8BA00BD25A0 /* HeaderCell.swift in Sources */,

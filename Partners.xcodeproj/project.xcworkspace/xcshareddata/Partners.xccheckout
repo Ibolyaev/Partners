@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>F48A0208-B3C2-4B94-BA83-6D14798D31F6</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>Partners</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>41AA83109DE2E5950548B1BCB181369EA6541B66</key>
 		<string>https://github.com/Ibolyaev/Partners.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Partners.xcodeproj/project.xcworkspace</string>
+	<string>Partners.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>41AA83109DE2E5950548B1BCB181369EA6541B66</key>

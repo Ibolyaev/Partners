@@ -48,6 +48,9 @@
             <PersistentString
                value = "jsonResault?">
             </PersistentString>
+            <PersistentString
+               value = "UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: &quot;PartnerInfoCell&quot;)">
+            </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
@@ -86,13 +89,13 @@
          contextName = "Partners.PartnersViewController.tableView (Partners.PartnersViewController)(ObjectiveC.UITableView, titleForHeaderInSection : Swift.Int) -&gt; Swift.Optional&lt;Swift.String&gt;:PartnersViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "sectionInfo.numberOfObjects">
+               value = "sectionInfo.name">
             </PersistentString>
             <PersistentString
                value = "sectionInfo.indexTitle">
             </PersistentString>
             <PersistentString
-               value = "sectionInfo.name">
+               value = "sectionInfo.numberOfObjects">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

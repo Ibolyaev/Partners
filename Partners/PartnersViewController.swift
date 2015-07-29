@@ -87,9 +87,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         dataCollection.setCollectionName(Partner.getCollectionName())
         
         dataCollection.makeRequestToCollection(filter)
-        
-        
-        
+                
         dataCollection._delegate = self
     }
 
@@ -156,11 +154,27 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "contactCell")
+        var cell = self.tableView.dequeueReusableCellWithIdentifier("PartnerInfoCell", forIndexPath: indexPath) as! PartnerInfoCell
         
-        let partner: AnyObject = currentResultsController.objectAtIndexPath(indexPath)
+        let partner = currentResultsController.objectAtIndexPath(indexPath) as! Partner
         
-        cell.textLabel?.text =  partner.name
+        cell.titleLabel.text =  partner.name
+        
+        //need to find out theare is a phone number or email in contact info
+        for elementOfcontactInfo in partner.contactInfo {
+            switch elementOfcontactInfo.typeContact {
+            case ContactInfo.Keys.Telephone:
+                //cell.telephoneIcon.highlighted = true
+                cell.telephoneIcon.alpha = 1.0
+                
+            case ContactInfo.Keys.Email:
+                //cell.emailIcon.highlighted = true
+                cell.emailIcon.alpha = 1.0
+            default:
+                continue
+            }
+
+        }
         
         return cell
         

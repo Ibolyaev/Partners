@@ -14,11 +14,47 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactCell" id="XRb-pz-NRz">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PartnerInfoCell" id="XRb-pz-NRz" customClass="PartnerInfoCell" customModule="Partners" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XRb-pz-NRz" id="JWd-Vz-XGa">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ygp-tD-TfD">
+                                            <rect key="frame" x="8" y="11" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Message-32" highlightedImage="Message filled-32" translatesAutoresizingMaskIntoConstraints="NO" id="f1Q-lY-elC">
+                                            <rect key="frame" x="386" y="12" width="20" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="2at-xJ-78g"/>
+                                                <constraint firstAttribute="width" constant="20" id="lnm-Ax-ddl"/>
+                                            </constraints>
+                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Phone-32" highlightedImage="Phone filled-32" translatesAutoresizingMaskIntoConstraints="NO" id="OIh-PO-2ht">
+                                            <rect key="frame" x="358" y="12" width="20" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="2yN-7q-VWF"/>
+                                                <constraint firstAttribute="width" constant="20" id="wlQ-7e-rxL"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ygp-tD-TfD" firstAttribute="top" secondItem="JWd-Vz-XGa" secondAttribute="topMargin" constant="3" id="0ko-l5-Exg"/>
+                                        <constraint firstItem="f1Q-lY-elC" firstAttribute="leading" secondItem="OIh-PO-2ht" secondAttribute="trailing" constant="8" id="BDN-Pw-F3C"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="OIh-PO-2ht" secondAttribute="bottom" constant="3" id="EP5-XQ-pxz"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="f1Q-lY-elC" secondAttribute="bottom" constant="3" id="FnF-84-QuZ"/>
+                                        <constraint firstItem="ygp-tD-TfD" firstAttribute="leading" secondItem="JWd-Vz-XGa" secondAttribute="leadingMargin" id="J2f-8H-FFu"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ygp-tD-TfD" secondAttribute="bottom" constant="3" id="WtE-Mv-IuE"/>
+                                        <constraint firstItem="f1Q-lY-elC" firstAttribute="trailing" secondItem="JWd-Vz-XGa" secondAttribute="trailingMargin" id="ZtC-Uw-zR1"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="emailIcon" destination="f1Q-lY-elC" id="7Us-Xz-RVa"/>
+                                    <outlet property="telephoneIcon" destination="OIh-PO-2ht" id="O6R-g7-UIu"/>
+                                    <outlet property="titleLabel" destination="ygp-tD-TfD" id="4AO-aB-taF"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -106,22 +142,24 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SGx-7u-eSS">
-                                            <rect key="frame" x="384" y="11" width="22" height="22"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="22" id="Jgn-xF-Sxo"/>
-                                                <constraint firstAttribute="width" constant="22" id="M2P-qh-5eB"/>
-                                            </constraints>
-                                            <state key="normal">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                        </button>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="02e-vh-jxG">
                                             <rect key="frame" x="8" y="29" width="40" height="14"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SGx-7u-eSS">
+                                            <rect key="frame" x="384" y="11" width="22" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="22" id="CkA-hh-CVW"/>
+                                                <constraint firstAttribute="height" constant="22" id="Jgn-xF-Sxo"/>
+                                                <constraint firstAttribute="width" constant="22" id="M2P-qh-5eB"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="wgN-yL-eMh"/>
+                                            </constraints>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="r2Y-Ei-TXi" firstAttribute="top" secondItem="D9n-v5-dhC" secondAttribute="topMargin" id="2vt-xv-1OX"/>
@@ -132,9 +170,8 @@
                                         <constraint firstItem="SGx-7u-eSS" firstAttribute="leading" secondItem="r2Y-Ei-TXi" secondAttribute="trailing" constant="5" id="LAu-FE-shW"/>
                                         <constraint firstItem="02e-vh-jxG" firstAttribute="top" secondItem="r2Y-Ei-TXi" secondAttribute="bottom" id="XpR-Hi-y4M"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="r2Y-Ei-TXi" secondAttribute="bottom" constant="6" id="cOu-fh-r3u"/>
+                                        <constraint firstItem="SGx-7u-eSS" firstAttribute="top" secondItem="D9n-v5-dhC" secondAttribute="topMargin" constant="3" id="cR3-mm-lz1"/>
                                         <constraint firstItem="02e-vh-jxG" firstAttribute="leading" secondItem="D9n-v5-dhC" secondAttribute="leadingMargin" id="gad-qd-x2Y"/>
-                                        <constraint firstItem="SGx-7u-eSS" firstAttribute="top" secondItem="D9n-v5-dhC" secondAttribute="topMargin" constant="3" id="kbY-4f-ypr"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="SGx-7u-eSS" secondAttribute="bottom" constant="2" id="q7B-Lo-cVA"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -285,6 +322,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Message filled-32" width="32" height="32"/>
+        <image name="Message-32" width="32" height="32"/>
+        <image name="Phone filled-32" width="32" height="32"/>
+        <image name="Phone-32" width="32" height="32"/>
         <image name="Settings" width="38" height="38"/>
     </resources>
     <inferredMetricsTieBreakers>
