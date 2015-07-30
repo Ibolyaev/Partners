@@ -82,47 +82,40 @@ class Connection1C: NSObject  {
                     
                 }
                 
-                if Partner.getCollectionName() == "/\(odataType)?" {
+                let collectionName = "/\(odataType)?"
+                
+                switch collectionName {
+                case Partner.getCollectionName():
                     if let jsonResault = jsonResault {
-                        
-                        Connection1C.loadPartnersInfo(jsonResault,sharedContext: sharedContext)
+                         Connection1C.loadPartnersInfo(jsonResault,sharedContext: sharedContext)
                     }
                     completionHandler(result: true, error: nil)
-                }
-                
-                
-                if Person.getCollectionName() == "/\(odataType)?" {
+                case Person.getCollectionName():
                     if let jsonResault = jsonResault {
                         Connection1C.loadPersonsInfo(jsonResault,sharedContext: sharedContext)
                     }
                     completionHandler(result: true, error: nil)
-                }
-                
-                if Product.getCollectionName() == "/\(odataType)?" {
+                case Product.getCollectionName():
                     if let jsonResault = jsonResault {
                         Connection1C.loadProductInfo(jsonResault,sharedContext: sharedContext)
                     }
                     completionHandler(result: true, error: nil)
-                }
-                
-                if Product.getPicturesCollectionName() == "/\(odataType)?" {
+                case Product.getPicturesCollectionName():
                     if let jsonResault = jsonResault {
                         Connection1C.loadProductPictures(jsonResault,sharedContext: sharedContext)
                     }
                     completionHandler(result: true, error: nil)
-                }
-
-
                     
+                default:
+                    return
+                    
+                }
                 
             }else{
                 completionHandler(result: false, error: error)
             }
         }
     }
-
-  
-
    
     class func loadPartnersInfo(jsonResault:NSArray,sharedContext:NSManagedObjectContext) {
         
@@ -170,8 +163,6 @@ class Connection1C: NSObject  {
                 }
                 
             }
-
-            
         }
     }
 
@@ -189,13 +180,8 @@ class Connection1C: NSObject  {
             ContactInfo.loadUpdateInfoPerson(person, contactInfoJSON: contactInfoJSON, context: sharedContext)
             CoreDataStackManager.sharedInstance().saveContext()
         }
-        
-        
-        
-        
+
     }
-
-
 
       /* Helper: Given a response with error, see if a status_message is returned, otherwise return the previous error */
     class func errorForData(data: NSData?, response: NSURLResponse?, error: NSError) -> NSError {

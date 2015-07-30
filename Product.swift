@@ -22,10 +22,10 @@ class Product: NSManagedObject {
         static let RefKey = "Ref_Key"
         static let PictureRefKey = "ФайлКартинки_Key"
     }
+    
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
-    
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
@@ -74,7 +74,6 @@ class Product: NSManagedObject {
             
         }
         
-        
         return Product(dictionary: dictionary, context: context)
         
     }
@@ -82,10 +81,8 @@ class Product: NSManagedObject {
     class func getProductByPictureReferenceKey(pictureRefKey:String,context: NSManagedObjectContext) -> Product?{
         
         let fetchRequest = NSFetchRequest(entityName: "Product")
-        
-        
+                
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "pictureRefKey", ascending: true)]
-        
         
         let pictureRefKeyPredicate = NSPredicate(format: "pictureRefKey == %@", pictureRefKey)
         
