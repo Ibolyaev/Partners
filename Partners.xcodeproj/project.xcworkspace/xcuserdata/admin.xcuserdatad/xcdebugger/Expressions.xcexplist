@@ -62,6 +62,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "Partners.PartnersViewController.prepareForSegue (Partners.PartnersViewController)(ObjectiveC.UIStoryboardSegue, sender : Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ():PartnersViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "segue.identifier">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Partners.ODataCollectionManager._constructOdataRequestURL (Partners.ODataCollectionManager)() -&gt; ObjectiveC.NSString:ODataCollectionManager.swift">
          <PersistentStrings>
             <PersistentString
@@ -124,6 +132,14 @@
          <PersistentStrings>
             <PersistentString
                value = "UIImage(named: &quot;Phone-32&quot;)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Partners.Product.init (Partners.Product.Type)(dictionary : Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;, context : ObjectiveC.NSManagedObjectContext) -&gt; Partners.Product:Product.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "pictureRefKey">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

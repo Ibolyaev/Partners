@@ -1,18 +1,18 @@
 //
-//  PartnersViewController.swift
+//  ProductsViewController.swift
 //  Partners
 //
-//  Created by Admin on 13.07.15.
+//  Created by Admin on 30.07.15.
 //  Copyright (c) 2015 Admin. All rights reserved.
 //
 
 import Foundation
+import Foundation
 import UIKit
 import CoreData
 
-class PartnersViewController: UITableViewController, NSFetchedResultsControllerDelegate, ODataCollectionDelegate, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating,UISearchControllerDelegate {
+class ProductsViewController: UITableViewController, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating,UISearchControllerDelegate {
     
-    var jsonResault: NSArray?
     var resultSearchController = UISearchController()
     
     var indicator = UIActivityIndicatorView()
@@ -36,7 +36,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         
-        let fetchRequest = NSFetchRequest(entityName: "Partner")
+        let fetchRequest = NSFetchRequest(entityName: "Product")
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         
@@ -48,7 +48,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         return fetchedResultsController
         
         }()
- 
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,92 +75,44 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         
     }
     
+    
     func loadResaults() {
         loadOdata()
     }
     
     func loadOdata() {
-        
-        Connection1C.sharedInstance().loadCollection(Partner.getCollectionName(), sharedContext: sharedContext) { (result, error) -> Void in
+    
+        Connection1C.sharedInstance().loadCollection(Product.getCollectionName(), sharedContext: sharedContext) { (result, error) -> Void in
             
             if let error = error {
                 self.displayError(error.localizedDescription,titleError: "Failed to load data")
             }else{
                 
-                if result {
+                Connection1C.sharedInstance().loadCollection(Product.getPicturesCollectionName(), sharedContext: self.sharedContext, completionHandler: { (result, error) -> Void in
                     
-                    Connection1C.sharedInstance().loadCollection(Person.getCollectionName(), sharedContext: self.sharedContext, completionHandler: { (result, error) -> Void in
-                        
-                        if let error = error {
-                            self.displayError(error.localizedDescription,titleError: "Failed to load data")
-                        }else{
-                            
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.refreshControl?.endRefreshing()
-                                self.tableView.reloadData()
-                                
-                                
-                            }
-
-                        }
-                        
-                    })
-
+                    
+                    
+                })
+                
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.refreshControl?.endRefreshing()
+                    self.tableView.reloadData()
+                    
+                    
                 }
-                
-                
-                
-                
+
             }
+
+            
         }
-
-        /*var filter = OdataFilter()
-        filter.addFilter("DeletionMark", filterValue: "false", filterOperand: "eq", clauseOperand: "")
-        
-        var dataCollection = ODataCollectionManager()
-        
-        dataCollection.setCollectionName(Partner.getCollectionName())
-        
-        dataCollection.makeRequestToCollection(filter)
-                
-        dataCollection._delegate = self*/
     }
 
-    
-    
-    @IBAction func settingsTouch(sender: UIBarButtonItem) {
-        
-        var ViewController = self.storyboard!.instantiateViewControllerWithIdentifier("SettingsViewController") as! SettingsViewController
-        presentViewController(ViewController, animated: true, completion: nil)
-        
-    }
-    
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        if segue.identifier == "PartnerDetailInfo" {
-            
-            var secondViewController : PartnerDetailInfo = segue.destinationViewController as! PartnerDetailInfo
-            
-            var indexPath = tableView.indexPathForSelectedRow() //get index of data for selected row
-            
-            let partner: AnyObject = currentResultsController.objectAtIndexPath(indexPath!)
-            
-            secondViewController.partner = partner as? Partner
-            
-            resultSearchController.active = false
-        }
-        
-       
-        
-    }
-
-    
     // MARK: UISearchResultsUpdating
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         
-        let fetchRequest = NSFetchRequest(entityName: "Partner")
+        let fetchRequest = NSFetchRequest(entityName: "Product")
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         
@@ -174,7 +126,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         searchResultsController?.performFetch(nil)
         
         self.tableView.reloadData()
-
+        
     }
     
     // MARK: UISearchControllerDelegate
@@ -183,18 +135,18 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         searchResultsController = nil
         self.tableView.reloadData()
     }
-    
+
     // MARK: tableView
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        performSegueWithIdentifier("segueToDetailView", sender: self)
+        //performSegueWithIdentifier("segueToDetailView", sender: self)
         
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = self.tableView.dequeueReusableCellWithIdentifier("PartnerInfoCell", forIndexPath: indexPath) as! PartnerInfoCell
+        /*var cell = self.tableView.dequeueReusableCellWithIdentifier("PartnerInfoCell", forIndexPath: indexPath) as! PartnerInfoCell
         
         let partner = currentResultsController.objectAtIndexPath(indexPath) as! Partner
         
@@ -213,9 +165,18 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
             default:
                 continue
             }
-
+            
         }
         
+        return cell*/
+        
+        var cell = UITableViewCell()
+        
+        let product = currentResultsController.objectAtIndexPath(indexPath) as! Product
+        
+        cell.textLabel!.text =  product.name
+        
+        cell.imageView?.image = UIImage(data: product.picture)
         return cell
         
     }
@@ -298,7 +259,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         switch type {
         case NSFetchedResultsChangeType.Insert:
-             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         case NSFetchedResultsChangeType.Delete:
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
         case NSFetchedResultsChangeType.Update:
@@ -308,51 +269,6 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         }
     }
-    
-      func requestFailedWithError(error: NSString) {
-        
-        if error == "You must provide a username and password in the settings app." {
-            var loginTextField: UITextField?
-            var passwordTextField: UITextField?
-            let alertController = UIAlertController(title: "Wrong password or login", message: "You must provide a username and password", preferredStyle: .Alert)
-            let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-                println("Ok Button Pressed")
-                if let login = loginTextField?.text {
-                   LoginInformation.sharedInstance().login = login
-                }
-                if let password = passwordTextField?.text {
-                   LoginInformation.sharedInstance().password = password
-                }
-                
-                self.loadResaults()
-            })
-            let cancel = UIAlertAction(title: "Cancel", style: .Cancel) { (action) -> Void in
-                println("Cancel Button Pressed")
-                self.refreshControl?.endRefreshing()
-            }
-            alertController.addAction(ok)
-            alertController.addAction(cancel)
-            alertController.addTextFieldWithConfigurationHandler { (textField) -> Void in
-                // Enter the textfiled customization code here.
-                loginTextField = textField
-                loginTextField?.placeholder = "Login"
-            }
-            alertController.addTextFieldWithConfigurationHandler { (textField) -> Void in
-                // Enter the textfiled customization code here.
-                passwordTextField = textField
-                passwordTextField?.placeholder = "Password"
-                passwordTextField?.secureTextEntry = true
-            }
-            
-            presentViewController(alertController, animated: true, completion: nil)
-        }else{
-           
-            displayError("Failed to load data", titleError: error as String)
-            self.refreshControl?.endRefreshing()
-        }
-        
-    }
-    
     func displayError(errorString: String?,titleError: String?) {
         dispatch_async(dispatch_get_main_queue(), {
             if let errorString = errorString {
@@ -373,15 +289,4 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     }
 
     
-    func didRecieveResponse(results: NSDictionary) {
-        
-        println("didRecieveResponse")
-                
-    }
-
 }
-    
-
-
-
-

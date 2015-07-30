@@ -59,6 +59,44 @@ class ODataCollectionManager: NSObject, NSXMLParserDelegate {
         connection.start()
     }
     
+    func makeAsynchronousRequestToCollection(filter: OdataFilter,completionHandler: (result: NSData!, response:NSURLResponse?, error: NSError?) -> Void) {
+        
+        self._filter = filter
+        
+        var urlString: NSString = self._constructOdataRequestURL().stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        
+        var url: NSURL = NSURL(string: urlString as String)!
+        
+        let session = NSURLSession.sharedSession()
+        // set up the base64-encoded credentials
+        let username = "test"
+        let password = "111"
+        let loginString = NSString(format: "%@:%@", username, password)
+        let loginData: NSData = loginString.dataUsingEncoding(NSUTF8StringEncoding)!
+        let base64LoginString = loginData.base64EncodedStringWithOptions(nil)
+        
+        // create the request
+        println("Making request to OData service:  <**censored**> for demojam on stage")
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "GET"
+        request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
+        
+        let task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+            
+            if let error = error {
+                completionHandler(result: nil,response: response, error: error)
+            }else{
+                                
+                completionHandler(result: data,response: response, error: nil)
+            }
+                
+        })
+        
+        task.resume()
+        
+    }
+
+    
     // ======================================================================
     // MARK: - Internal/Private Methods
     

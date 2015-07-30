@@ -23,9 +23,17 @@
         <relationship name="contactInfo" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ContactInfo" inverseName="person" inverseEntity="ContactInfo" syncable="YES"/>
         <relationship name="partner" maxCount="1" deletionRule="Nullify" destinationEntity="Partner" inverseName="persons" inverseEntity="Partner" syncable="YES"/>
     </entity>
+    <entity name="Product" representedClassName="Product" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="pictureRefKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="refKey" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="ContactInfo" positionX="405" positionY="-78" width="128" height="150"/>
         <element name="Partner" positionX="52" positionY="-168" width="128" height="105"/>
         <element name="Person" positionX="63" positionY="12" width="128" height="135"/>
+        <element name="Product" positionX="234" positionY="-27" width="128" height="120"/>
     </elements>
 </model>
