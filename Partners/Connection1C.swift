@@ -15,7 +15,7 @@ class Connection1C: NSObject  {
     typealias CompletionHander = (result: AnyObject!, error: NSError?) -> Void
     
     
-    override init() {
+        override init() {
         session = NSURLSession.sharedSession()
         super.init()
     }
@@ -82,30 +82,38 @@ class Connection1C: NSObject  {
                     
                 }
                 
-                let collectionName = "/\(odataType)?"
                 
-                switch collectionName {
-                case Partner.getCollectionName():
+                
+                switch odataType {
+                case Partner.getODataType().description:
                     if let jsonResault = jsonResault {
                          Connection1C.loadPartnersInfo(jsonResault,sharedContext: sharedContext)
                     }
                     completionHandler(result: true, error: nil)
-                case Person.getCollectionName():
+                case Person.getODataType().description:
                     if let jsonResault = jsonResault {
                         Connection1C.loadPersonsInfo(jsonResault,sharedContext: sharedContext)
                     }
                     completionHandler(result: true, error: nil)
-                case Product.getCollectionName():
+                case Product.getODataType().description:
                     if let jsonResault = jsonResault {
                         Connection1C.loadProductInfo(jsonResault,sharedContext: sharedContext)
                     }
                     completionHandler(result: true, error: nil)
-                case Product.getPicturesCollectionName():
+                case Product.getODataTypePicturesCollection().description:
                     if let jsonResault = jsonResault {
                         Connection1C.loadProductPictures(jsonResault,sharedContext: sharedContext)
                     }
                     completionHandler(result: true, error: nil)
-                    
+                case Product.getODataTypePrice().description:
+                    if let jsonResault = jsonResault {
+                        Connection1C.loadProductPrice(jsonResault,sharedContext: sharedContext)
+                    }
+                    completionHandler(result: true, error: nil)
+                case Order.getODataType().description:
+                    if let jsonResault = jsonResault {
+                        Connection1C.loadOrders(jsonResault, sharedContext: sharedContext)
+                    }
                 default:
                     return
                     
@@ -142,6 +150,18 @@ class Connection1C: NSObject  {
             
         }
     }
+    class func loadOrders(jsonResault:NSArray,sharedContext:NSManagedObjectContext) {
+        
+        for var i=0;i<jsonResault.count; i++ {
+            let contactJSON = jsonResault.objectAtIndex(i) as! JSONValue
+            
+            let product = Order.loadUpdateInfo(contactJSON as! [String : AnyObject], context: sharedContext)
+            
+            CoreDataStackManager.sharedInstance().saveContext()
+            
+        }
+    }
+
     class func loadProductPictures(jsonResault:NSArray,sharedContext:NSManagedObjectContext) {
         
         for var i=0;i<jsonResault.count; i++ {
@@ -165,6 +185,27 @@ class Connection1C: NSObject  {
             }
         }
     }
+    class func loadProductPrice(jsonResault:NSArray,sharedContext:NSManagedObjectContext) {
+        
+        for var i=0;i<jsonResault.count; i++ {
+            
+            let jsonValue = jsonResault.objectAtIndex(i) as! JSONValue
+            
+            
+            let productRefKey = jsonValue[key:"Номенклатура_Key"] as! String
+            
+            let product = Product.getProductByReferenceKey(productRefKey, context: sharedContext)
+            
+            if let product = product {
+                let price = jsonValue[key:"Цена"] as! Int
+                
+                product.price = price
+                CoreDataStackManager.sharedInstance().saveContext()
+                
+            }
+        }
+    }
+    
 
 
     class func loadPersonsInfo(jsonResault:NSArray,sharedContext:NSManagedObjectContext) {
@@ -222,3 +263,27 @@ class Connection1C: NSObject  {
 
     
 }
+
+enum dataType : Printable {  // Swift 2.0; for < 2.0 use Printable
+    case InformationRegister_ЦеныНоменклатуры_RecordType
+    case Catalog_Номенклатура
+    case InformationRegister_ПрисоединенныеФайлы
+    case Catalog_Партнеры
+    case Catalog_КонтактныеЛицаПартнеров
+    case Document_ЗаказКлиента
+    
+    var description : String {
+        switch self {
+            // Use Internationalization, as appropriate.
+        case .InformationRegister_ЦеныНоменклатуры_RecordType: return "InformationRegister_ЦеныНоменклатуры_RecordType"
+        case .Catalog_Номенклатура: return "Catalog_Номенклатура"
+        case .Catalog_Партнеры: return "Catalog_Партнеры"
+        case .Catalog_КонтактныеЛицаПартнеров: return "Catalog_КонтактныеЛицаПартнеров"
+        case .InformationRegister_ПрисоединенныеФайлы: return "InformationRegister_ПрисоединенныеФайлы"
+        case .Document_ЗаказКлиента: return "Document_ЗаказКлиента"
+        }
+    }
+}
+
+
+

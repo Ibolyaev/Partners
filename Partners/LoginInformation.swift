@@ -21,7 +21,5 @@ class LoginInformation: NSObject {
         
         return Singleton.sharedInstance
     }
-
-    
     
 }

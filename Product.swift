@@ -43,7 +43,23 @@ class Product: NSManagedObject {
     class func getPicturesCollectionName() -> String {
         return "/InformationRegister_ПрисоединенныеФайлы?"
     }
-    
+    class func getPriceCollectionName() -> String {
+        return "/InformationRegister_ЦеныНоменклатуры_RecordType/SliceLast()?"
+    }
+        
+    class func getODataType() -> dataType {
+        
+        return dataType.Catalog_Номенклатура
+    }
+    class func getODataTypePicturesCollection() -> dataType {
+        
+        return dataType.InformationRegister_ПрисоединенныеФайлы
+    }
+    class func getODataTypePrice() -> dataType {
+        
+        return dataType.InformationRegister_ЦеныНоменклатуры_RecordType
+    }
+
     class func updateObject(product:Product,dictionary: [String : AnyObject]) {
         product.name = dictionary[Keys.Name] as! String
         product.refKey = dictionary[Keys.RefKey] as! String
@@ -85,6 +101,33 @@ class Product: NSManagedObject {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "pictureRefKey", ascending: true)]
         
         let pictureRefKeyPredicate = NSPredicate(format: "pictureRefKey == %@", pictureRefKey)
+        
+        let predicate = NSCompoundPredicate.orPredicateWithSubpredicates([pictureRefKeyPredicate])
+        
+        fetchRequest.predicate = predicate
+        
+        let count = context.countForFetchRequest(fetchRequest, error: nil)
+        
+        if count > 0 {
+            let resault = context.executeFetchRequest(fetchRequest, error: nil) as! [Product]
+            
+            for element in resault {
+                
+                return element
+            }
+            
+        }
+        
+        return nil
+        
+    }
+    class func getProductByReferenceKey(refKey:String,context: NSManagedObjectContext) -> Product?{
+        
+        let fetchRequest = NSFetchRequest(entityName: "Product")
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "refKey", ascending: true)]
+        
+        let pictureRefKeyPredicate = NSPredicate(format: "refKey == %@", refKey)
         
         let predicate = NSCompoundPredicate.orPredicateWithSubpredicates([pictureRefKeyPredicate])
         

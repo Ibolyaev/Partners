@@ -3,6 +3,9 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "static Partners.Partner.alreadyInContext (Partners.Partner.Type)(Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;, context : ObjectiveC.NSManagedObjectContext) -&gt; Swift.Bool:Partner.swift">
+      </ContextState>
+      <ContextState
          contextName = "Partners.PartnersViewController.didRecieveResponse (Partners.PartnersViewController)(ObjectiveC.NSDictionary) -&gt; ():PartnersViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -43,6 +46,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "Partners.PartnersViewController.prepareForSegue (Partners.PartnersViewController)(ObjectiveC.UIStoryboardSegue, sender : Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ():PartnersViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "segue.identifier">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Partners.PartnersViewController.tableView (Partners.PartnersViewController)(ObjectiveC.UITableView, cellForRowAtIndexPath : ObjectiveC.NSIndexPath) -&gt; ObjectiveC.UITableViewCell:PartnersViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -62,10 +73,19 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "Partners.PartnersViewController.prepareForSegue (Partners.PartnersViewController)(ObjectiveC.UIStoryboardSegue, sender : Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ():PartnersViewController.swift">
+         contextName = "Partners.Person.init (Partners.Person.Type)(dictionary : Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;, context : ObjectiveC.NSManagedObjectContext) -&gt; Partners.Person:Person.swift">
          <PersistentStrings>
             <PersistentString
-               value = "segue.identifier">
+               value = "Person.getPartnerbyReferenceKey(ownerRefKey,context: context)">
+            </PersistentString>
+            <PersistentString
+               value = "ownerRefKey">
+            </PersistentString>
+            <PersistentString
+               value = "dictionary[Keys.OwnerRefKey] ">
+            </PersistentString>
+            <PersistentString
+               value = "partner">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -86,34 +106,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "Partners.PartnerDetailInfo.tableView (Partners.PartnerDetailInfo)(ObjectiveC.UITableView, cellForRowAtIndexPath : ObjectiveC.NSIndexPath) -&gt; ObjectiveC.UITableViewCell:PartnerDetailInfo.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "contactInfo[0]">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "Partners.PartnersViewController.tableView (Partners.PartnersViewController)(ObjectiveC.UITableView, titleForHeaderInSection : Swift.Int) -&gt; Swift.Optional&lt;Swift.String&gt;:PartnersViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "sectionInfo.name">
-            </PersistentString>
-            <PersistentString
-               value = "sectionInfo.indexTitle">
-            </PersistentString>
-            <PersistentString
-               value = "sectionInfo.numberOfObjects">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "Partners.PartnersViewController.willDismissSearchController (Partners.PartnersViewController)(ObjectiveC.UISearchController) -&gt; ():PartnersViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "Partners.ODataCollectionManager.connectionDidFinishLoading (Partners.ODataCollectionManager)(Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.NSURLConnection&gt;) -&gt; ():ODataCollectionManager.swift">
-      </ContextState>
-      <ContextState
          contextName = "Partners.PartnerDetailInfo.viewWillAppear (Partners.PartnerDetailInfo)(Swift.Bool) -&gt; ():PartnerDetailInfo.swift">
          <PersistentStrings>
             <PersistentString
@@ -126,6 +118,34 @@
                value = "partner!.contactInfo">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Partners.PartnerDetailInfo.tableView (Partners.PartnerDetailInfo)(ObjectiveC.UITableView, cellForRowAtIndexPath : ObjectiveC.NSIndexPath) -&gt; ObjectiveC.UITableViewCell:PartnerDetailInfo.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "contactInfo[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Partners.PartnersViewController.tableView (Partners.PartnersViewController)(ObjectiveC.UITableView, titleForHeaderInSection : Swift.Int) -&gt; Swift.Optional&lt;Swift.String&gt;:PartnersViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "sectionInfo.indexTitle">
+            </PersistentString>
+            <PersistentString
+               value = "sectionInfo.name">
+            </PersistentString>
+            <PersistentString
+               value = "sectionInfo.numberOfObjects">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Partners.ODataCollectionManager.connectionDidFinishLoading (Partners.ODataCollectionManager)(Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.NSURLConnection&gt;) -&gt; ():ODataCollectionManager.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Partners.PartnersViewController.willDismissSearchController (Partners.PartnersViewController)(ObjectiveC.UISearchController) -&gt; ():PartnersViewController.swift">
       </ContextState>
       <ContextState
          contextName = "Partners.PartnerDetailInfo.configurePartnerCell (Partners.PartnerDetailInfo)(Partners.PartnerDetailInfoCell, indexPath : ObjectiveC.NSIndexPath) -&gt; ObjectiveC.UITableViewCell:PartnerDetailInfo.swift">
@@ -166,6 +186,23 @@
          contextName = "Partners.PartnersViewController.currentResultsController.getter : ObjectiveC.NSFetchedResultsController:PartnersViewController.swift">
       </ContextState>
       <ContextState
+         contextName = "Partners.Order.init (Partners.Order.Type)(dictionary : Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;, context : ObjectiveC.NSManagedObjectContext) -&gt; Partners.Order:Order.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "dictionary[Keys.Date]">
+            </PersistentString>
+            <PersistentString
+               value = "dateString">
+            </PersistentString>
+            <PersistentString
+               value = "date">
+            </PersistentString>
+            <PersistentString
+               value = "dictionary[Keys.Date] as! Date">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Partners.PartnerDetailInfo.configureContactInfoCell (Partners.PartnerDetailInfo)(Partners.ContactInfoCell, indexPath : ObjectiveC.NSIndexPath) -&gt; ObjectiveC.UITableViewCell:PartnerDetailInfo.swift">
          <PersistentStrings>
             <PersistentString
@@ -188,6 +225,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "Partners.ProductsViewController.tableView (Partners.ProductsViewController)(ObjectiveC.UITableView, cellForRowAtIndexPath : ObjectiveC.NSIndexPath) -&gt; ObjectiveC.UITableViewCell:ProductsViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "product.price.stringValue">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Partners.PartnersViewController.(requestFailedWithError (Partners.PartnersViewController) -&gt; (ObjectiveC.NSString) -&gt; ()).(closure #1):PartnersViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -200,6 +245,14 @@
          <PersistentStrings>
             <PersistentString
                value = "person.partner">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "static Partners.Connection1C.loadProductPrice (Partners.Connection1C.Type)(ObjectiveC.NSArray, sharedContext : ObjectiveC.NSManagedObjectContext) -&gt; ():Connection1C.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "productRefKey">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -222,26 +275,6 @@
             </PersistentString>
             <PersistentString
                value = "person">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "static Partners.Partner.alreadyInContext (Partners.Partner.Type)(Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;, context : ObjectiveC.NSManagedObjectContext) -&gt; Swift.Bool:Partner.swift">
-      </ContextState>
-      <ContextState
-         contextName = "Partners.Person.init (Partners.Person.Type)(dictionary : Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;, context : ObjectiveC.NSManagedObjectContext) -&gt; Partners.Person:Person.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "Person.getPartnerbyReferenceKey(ownerRefKey,context: context)">
-            </PersistentString>
-            <PersistentString
-               value = "ownerRefKey">
-            </PersistentString>
-            <PersistentString
-               value = "dictionary[Keys.OwnerRefKey] ">
-            </PersistentString>
-            <PersistentString
-               value = "partner">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

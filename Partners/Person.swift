@@ -25,6 +25,11 @@ class Person : NSManagedObject {
     class func getCollectionName() -> String {
         return "/Catalog_КонтактныеЛицаПартнеров?"
     }
+    class func getODataType() -> dataType {
+        
+        return dataType.Catalog_КонтактныеЛицаПартнеров
+    }
+
 
     
     @NSManaged var name: String

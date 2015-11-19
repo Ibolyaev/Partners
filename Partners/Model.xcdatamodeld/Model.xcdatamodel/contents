@@ -9,6 +9,22 @@
         <relationship name="partner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Partner" inverseName="contactInfo" inverseEntity="Partner" syncable="YES"/>
         <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="contactInfo" inverseEntity="Person" syncable="YES"/>
     </entity>
+    <entity name="Order" representedClassName="Order" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="refKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipmentDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalSum" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="partner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Partner" syncable="YES"/>
+        <relationship name="products" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Order_Products" inverseName="order" inverseEntity="Order_Products" syncable="YES"/>
+    </entity>
+    <entity name="Order_Products" representedClassName="PRODUCT_MODULE_NAME.Order_Products" syncable="YES">
+        <attribute name="count" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="order" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Order" inverseName="products" inverseEntity="Order" syncable="YES"/>
+        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Product" syncable="YES"/>
+    </entity>
     <entity name="Partner" representedClassName="Partner" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="refKey" optional="YES" attributeType="String" syncable="YES"/>
@@ -32,6 +48,8 @@
     </entity>
     <elements>
         <element name="ContactInfo" positionX="405" positionY="-78" width="128" height="150"/>
+        <element name="Order" positionX="225" positionY="-36" width="128" height="165"/>
+        <element name="Order_Products" positionX="234" positionY="-27" width="128" height="105"/>
         <element name="Partner" positionX="52" positionY="-168" width="128" height="105"/>
         <element name="Person" positionX="63" positionY="12" width="128" height="135"/>
         <element name="Product" positionX="234" positionY="-27" width="128" height="120"/>

@@ -14,6 +14,8 @@ class SettingsViewController: UIViewController {
     
    var tapRecognizer: UITapGestureRecognizer? = nil
     
+    @IBOutlet weak var menuButton: UIBarButtonItem!
+    
     @IBOutlet weak var addresstextField: UITextField!
     @IBOutlet weak var baseNameTextField: UITextField!
     
@@ -38,6 +40,13 @@ class SettingsViewController: UIViewController {
         /* Configure tap recognizer */
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
+        
+        if self.revealViewController() != nil {
+            menuButton.target = self.revealViewController()
+            menuButton.action = "revealToggle:"
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+
     }
 
     @IBAction func connectTouchUpInside(sender: UIButton) {

@@ -11,11 +11,12 @@ import Foundation
 import UIKit
 import CoreData
 
-class ProductsViewController: UITableViewController, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating,UISearchControllerDelegate {
+class OrdersViewController: UITableViewController, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating,UISearchControllerDelegate {
     
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
     var resultSearchController = UISearchController()
+    
     var indicator = UIActivityIndicatorView()
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
@@ -37,13 +38,13 @@ class ProductsViewController: UITableViewController, NSFetchedResultsControllerD
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         
-        let fetchRequest = NSFetchRequest(entityName: "Product")
+        let fetchRequest = NSFetchRequest(entityName: "Order")
         
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
             managedObjectContext: self.sharedContext,
-            sectionNameKeyPath: "name",
+            sectionNameKeyPath: "date",
             cacheName: nil)
         
         return fetchedResultsController
@@ -88,49 +89,32 @@ class ProductsViewController: UITableViewController, NSFetchedResultsControllerD
     }
     
     func loadOdata() {
-    
-        Connection1C.sharedInstance().loadCollection(Product.getCollectionName(), sharedContext: sharedContext) { (result, error) -> Void in
+        
+        Connection1C.sharedInstance().loadCollection(Order.getCollectionName(), sharedContext: sharedContext) { (result, error) -> Void in
             
             if let error = error {
                 self.displayError(error.localizedDescription,titleError: "Failed to load data")
             }else{
-                
-                Connection1C.sharedInstance().loadCollection(Product.getPicturesCollectionName(), sharedContext: self.sharedContext, completionHandler: { (result, error) -> Void in
-                    
-                    if let error = error {
-                        self.displayError(error.localizedDescription,titleError: "Failed to load data")
-                    }else{
-                        Connection1C.sharedInstance().loadCollection(Product.getPriceCollectionName(), sharedContext: self.sharedContext) { (result, error) -> Void in
-                            
-                            
-                            if let error = error {
-                                self.displayError(error.localizedDescription,titleError: "Failed to load data")
-                            }
-                        }
-                    }
-                    
-                })
-                
                 
                 dispatch_async(dispatch_get_main_queue()) {
                     self.refreshControl?.endRefreshing()
                     self.tableView.reloadData()
                     
                     
-                }                
+                }
             }
         }
     }
-
+    
     // MARK: UISearchResultsUpdating
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         
-        let fetchRequest = NSFetchRequest(entityName: "Product")
+        let fetchRequest = NSFetchRequest(entityName: "Order")
         
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "number", ascending: true)]
         
-        let firstNamePredicate = NSPredicate(format: "name CONTAINS[cd] %@", searchController.searchBar.text.lowercaseString)
+        let firstNamePredicate = NSPredicate(format: "number CONTAINS[cd] %@", searchController.searchBar.text.lowercaseString)
         
         let predicate = NSCompoundPredicate.orPredicateWithSubpredicates([firstNamePredicate])
         
@@ -149,7 +133,7 @@ class ProductsViewController: UITableViewController, NSFetchedResultsControllerD
         searchResultsController = nil
         self.tableView.reloadData()
     }
-
+    
     // MARK: tableView
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -160,19 +144,14 @@ class ProductsViewController: UITableViewController, NSFetchedResultsControllerD
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell: AnyObject = self.tableView.dequeueReusableCellWithIdentifier("ProductInfoCell", forIndexPath: indexPath)
+        var cell: AnyObject = self.tableView.dequeueReusableCellWithIdentifier("OrderInfoCell", forIndexPath: indexPath)
         
-        let product = currentResultsController.objectAtIndexPath(indexPath) as! Product
+        let order = currentResultsController.objectAtIndexPath(indexPath) as! Order
         
-        cell.textLabel!!.text =  product.name
+        cell.textLabel!!.text =  order.number
+        cell.detailTextLabel?!.text = order.totalSum.stringValue
         
-        var formatter = NSNumberFormatter()
-        formatter.numberStyle = .CurrencyStyle
-        formatter.locale = NSLocale(localeIdentifier: "ru_RU")
         
-        cell.detailTextLabel!!.text = formatter.stringFromNumber(product.price)
-        
-        cell.imageView!!.image = UIImage(data: product.picture)
         return cell
             as! UITableViewCell
     }
@@ -196,7 +175,18 @@ class ProductsViewController: UITableViewController, NSFetchedResultsControllerD
             if let sectionInfo = sections[section] as? NSFetchedResultsSectionInfo {
                 
                 if let name = sectionInfo.name {
-                    return sectionInfo.indexTitle
+                    
+                    /*var dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "hh:mm" //format style. Browse online to get a format that fits your needs.
+                    var dateString = dateFormatter.stringFromDate(date)*/
+                    var dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd' 'hh:mm:ss '+0000'" //format style. Browse online to get a format that fits your needs.
+                    var date = dateFormatter.dateFromString(name)!
+                    
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    var dateString = dateFormatter.stringFromDate(date)
+                    
+                    return dateString
                 }
                 
             }
@@ -283,6 +273,6 @@ class ProductsViewController: UITableViewController, NSFetchedResultsControllerD
             }
         })
     }
-
+    
     
 }

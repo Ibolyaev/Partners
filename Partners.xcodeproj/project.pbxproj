@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		844782BB1B7DC3A9006A3700 /* Order_Products.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844782BA1B7DC3A9006A3700 /* Order_Products.swift */; };
+		844782BD1B7DC3AA006A3700 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844782BC1B7DC3AA006A3700 /* Order.swift */; };
+		844782BF1B7DCE0F006A3700 /* OrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844782BE1B7DCE0F006A3700 /* OrdersViewController.swift */; };
 		84874B421B53D14800BD25A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84874B411B53D14800BD25A0 /* AppDelegate.swift */; };
 		84874B451B53D14800BD25A0 /* Partners.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84874B431B53D14800BD25A0 /* Partners.xcdatamodeld */; };
 		84874B4A1B53D14800BD25A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84874B481B53D14800BD25A0 /* Main.storyboard */; };
@@ -26,6 +29,10 @@
 		84874B7E1B58EE9100BD25A0 /* ContactInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84874B7D1B58EE9100BD25A0 /* ContactInfo.swift */; };
 		84874B821B58FA0600BD25A0 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84874B811B58FA0600BD25A0 /* CoreDataStackManager.swift */; };
 		84874B861B58FA4500BD25A0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84874B841B58FA4500BD25A0 /* Model.xcdatamodeld */; };
+		84BCEEED1B85FF5B00F4E135 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BCEEEC1B85FF5B00F4E135 /* SWRevealViewController.m */; };
+		84BCEF051B87208700F4E135 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84BCEF041B87207700F4E135 /* Charts.framework */; };
+		84BCEF061B87208700F4E135 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84BCEF041B87207700F4E135 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		84BCEF171B87265900F4E135 /* BarChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCEF161B87265900F4E135 /* BarChartViewController.swift */; };
 		84C27ACA1B5D1BCB00DE8A5D /* ContactInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C27AC91B5D1BCB00DE8A5D /* ContactInfoCell.swift */; };
 		84C27ACC1B5FC82400DE8A5D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C27ACB1B5FC82400DE8A5D /* SettingsViewController.swift */; };
 		84C9443C1B68B22300FF1954 /* PartnerInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C9443B1B68B22200FF1954 /* PartnerInfoCell.swift */; };
@@ -43,9 +50,40 @@
 			remoteGlobalIDString = 84874B3B1B53D14800BD25A0;
 			remoteInfo = Partners;
 		};
+		84BCEF031B87207700F4E135 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84BCEEFF1B87207700F4E135 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5BA8EC401A9D14DC00CE82E1;
+			remoteInfo = Charts;
+		};
+		84BCEF071B87208700F4E135 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84BCEEFF1B87207700F4E135 /* Charts.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5BA8EC3F1A9D14DC00CE82E1;
+			remoteInfo = Charts;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		84BCEEFE1B871AD300F4E135 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				84BCEF061B87208700F4E135 /* Charts.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		844782BA1B7DC3A9006A3700 /* Order_Products.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order_Products.swift; sourceTree = "<group>"; };
+		844782BC1B7DC3AA006A3700 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		844782BE1B7DCE0F006A3700 /* OrdersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrdersViewController.swift; sourceTree = "<group>"; };
 		84874B3C1B53D14800BD25A0 /* Partners.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Partners.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84874B401B53D14800BD25A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84874B411B53D14800BD25A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +107,11 @@
 		84874B7D1B58EE9100BD25A0 /* ContactInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactInfo.swift; sourceTree = "<group>"; };
 		84874B811B58FA0600BD25A0 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		84874B851B58FA4500BD25A0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		84BCEEEA1B85FF5A00F4E135 /* Partners-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Partners-Bridging-Header.h"; sourceTree = "<group>"; };
+		84BCEEEB1B85FF5B00F4E135 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		84BCEEEC1B85FF5B00F4E135 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		84BCEEFF1B87207700F4E135 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "Partners.xcodeproj/../../../../Downloads/ios-charts-master/Charts/Charts.xcodeproj"; sourceTree = "<group>"; };
+		84BCEF161B87265900F4E135 /* BarChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BarChartViewController.swift; path = ../../../../Downloads/iOSChartsDemo/iOSChartsDemo/BarChartViewController.swift; sourceTree = "<group>"; };
 		84C27AC91B5D1BCB00DE8A5D /* ContactInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactInfoCell.swift; sourceTree = "<group>"; };
 		84C27ACB1B5FC82400DE8A5D /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		84C9443B1B68B22200FF1954 /* PartnerInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartnerInfoCell.swift; sourceTree = "<group>"; };
@@ -83,6 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84BCEF051B87208700F4E135 /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +143,7 @@
 		84874B331B53D14800BD25A0 = {
 			isa = PBXGroup;
 			children = (
+				84BCEEFF1B87207700F4E135 /* Charts.xcodeproj */,
 				84874B3E1B53D14800BD25A0 /* Partners */,
 				84874B571B53D14900BD25A0 /* PartnersTests */,
 				84874B3D1B53D14800BD25A0 /* Products */,
@@ -117,14 +162,16 @@
 		84874B3E1B53D14800BD25A0 /* Partners */ = {
 			isa = PBXGroup;
 			children = (
+				84874B411B53D14800BD25A0 /* AppDelegate.swift */,
+				84BCEEE91B85FEBA00F4E135 /* SWRevealViewController */,
 				84874B831B58FA1200BD25A0 /* CoreData */,
 				84874B6F1B53D1DC00BD25A0 /* JSonParser */,
 				84874B6E1B53D1C600BD25A0 /* ODataParser */,
-				84874B411B53D14800BD25A0 /* AppDelegate.swift */,
-				84874B481B53D14800BD25A0 /* Main.storyboard */,
 				84C9443D1B68D31D00FF1954 /* Model */,
 				84C9443E1B68D33700FF1954 /* Controller */,
 				84874B4B1B53D14800BD25A0 /* Images.xcassets */,
+				84BCEF161B87265900F4E135 /* BarChartViewController.swift */,
+				84874B481B53D14800BD25A0 /* Main.storyboard */,
 				84874B4D1B53D14800BD25A0 /* LaunchScreen.xib */,
 				84874B431B53D14800BD25A0 /* Partners.xcdatamodeld */,
 				84874B3F1B53D14800BD25A0 /* Supporting Files */,
@@ -185,9 +232,29 @@
 			name = CoreData;
 			sourceTree = "<group>";
 		};
+		84BCEEE91B85FEBA00F4E135 /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				84BCEEEB1B85FF5B00F4E135 /* SWRevealViewController.h */,
+				84BCEEEC1B85FF5B00F4E135 /* SWRevealViewController.m */,
+				84BCEEEA1B85FF5A00F4E135 /* Partners-Bridging-Header.h */,
+			);
+			name = SWRevealViewController;
+			sourceTree = "<group>";
+		};
+		84BCEF001B87207700F4E135 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				84BCEF041B87207700F4E135 /* Charts.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		84C9443D1B68D31D00FF1954 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				844782BC1B7DC3AA006A3700 /* Order.swift */,
+				844782BA1B7DC3A9006A3700 /* Order_Products.swift */,
 				84C944461B6A3C7F00FF1954 /* Product.swift */,
 				84CBBCC31B60F3240044162E /* LoginInformation.swift */,
 				84874B7D1B58EE9100BD25A0 /* ContactInfo.swift */,
@@ -205,6 +272,7 @@
 				84874B701B53D2E000BD25A0 /* PartnersViewController.swift */,
 				84C27ACB1B5FC82400DE8A5D /* SettingsViewController.swift */,
 				84C944441B6A3A4400FF1954 /* ProductsViewController.swift */,
+				844782BE1B7DCE0F006A3700 /* OrdersViewController.swift */,
 				84874B761B569DAC00BD25A0 /* PartnerDetailInfo.swift */,
 			);
 			name = Controller;
@@ -230,10 +298,12 @@
 				84874B381B53D14800BD25A0 /* Sources */,
 				84874B391B53D14800BD25A0 /* Frameworks */,
 				84874B3A1B53D14800BD25A0 /* Resources */,
+				84BCEEFE1B871AD300F4E135 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				84BCEF081B87208700F4E135 /* PBXTargetDependency */,
 			);
 			name = Partners;
 			productName = Partners;
@@ -287,6 +357,12 @@
 			mainGroup = 84874B331B53D14800BD25A0;
 			productRefGroup = 84874B3D1B53D14800BD25A0 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 84BCEF001B87207700F4E135 /* Products */;
+					ProjectRef = 84BCEEFF1B87207700F4E135 /* Charts.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				84874B3B1B53D14800BD25A0 /* Partners */,
@@ -294,6 +370,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		84BCEF041B87207700F4E135 /* Charts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Charts.framework;
+			remoteRef = 84BCEF031B87207700F4E135 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		84874B3A1B53D14800BD25A0 /* Resources */ = {
@@ -320,6 +406,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				844782BF1B7DCE0F006A3700 /* OrdersViewController.swift in Sources */,
 				84874B751B54E93100BD25A0 /* Person.swift in Sources */,
 				84874B7E1B58EE9100BD25A0 /* ContactInfo.swift in Sources */,
 				84C944451B6A3A4400FF1954 /* ProductsViewController.swift in Sources */,
@@ -330,14 +417,18 @@
 				84C27ACC1B5FC82400DE8A5D /* SettingsViewController.swift in Sources */,
 				84874B6C1B53D1BD00BD25A0 /* OptJSON.swift in Sources */,
 				84874B6A1B53D1BD00BD25A0 /* oDataFilter.swift in Sources */,
+				84BCEF171B87265900F4E135 /* BarChartViewController.swift in Sources */,
 				84874B451B53D14800BD25A0 /* Partners.xcdatamodeld in Sources */,
 				84C27ACA1B5D1BCB00DE8A5D /* ContactInfoCell.swift in Sources */,
+				84BCEEED1B85FF5B00F4E135 /* SWRevealViewController.m in Sources */,
 				84874B6B1B53D1BD00BD25A0 /* ODataServiceManager.swift in Sources */,
 				84874B771B569DAC00BD25A0 /* PartnerDetailInfo.swift in Sources */,
 				84C944411B6A0E2100FF1954 /* Connection1C.swift in Sources */,
 				84874B711B53D2E000BD25A0 /* PartnersViewController.swift in Sources */,
 				84C9443C1B68B22300FF1954 /* PartnerInfoCell.swift in Sources */,
 				84874B421B53D14800BD25A0 /* AppDelegate.swift in Sources */,
+				844782BD1B7DC3AA006A3700 /* Order.swift in Sources */,
+				844782BB1B7DC3A9006A3700 /* Order_Products.swift in Sources */,
 				84CBBCC41B60F3240044162E /* LoginInformation.swift in Sources */,
 				84874B7C1B57D8BA00BD25A0 /* HeaderCell.swift in Sources */,
 				84874B691B53D1BD00BD25A0 /* ODataCollectionManager.swift in Sources */,
@@ -360,6 +451,11 @@
 			isa = PBXTargetDependency;
 			target = 84874B3B1B53D14800BD25A0 /* Partners */;
 			targetProxy = 84874B551B53D14900BD25A0 /* PBXContainerItemProxy */;
+		};
+		84BCEF081B87208700F4E135 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Charts;
+			targetProxy = 84BCEF071B87208700F4E135 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -468,9 +564,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Partners/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Partners/Partners-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -478,9 +577,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Partners/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Partners/Partners-Bridging-Header.h";
 			};
 			name = Release;
 		};

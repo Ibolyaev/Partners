@@ -10,7 +10,9 @@ import Foundation
 import UIKit
 import CoreData
 
-class PartnersViewController: UITableViewController, NSFetchedResultsControllerDelegate, ODataCollectionDelegate, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating,UISearchControllerDelegate {
+class PartnersViewController: UITableViewController, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating,UISearchControllerDelegate {
+    
+    @IBOutlet weak var menuButton: UIBarButtonItem!
     
     var jsonResault: NSArray?
     var resultSearchController = UISearchController()
@@ -73,6 +75,12 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         self.refreshControl = refreshControl
         
         
+        if self.revealViewController() != nil {
+            menuButton.target = self.revealViewController()
+            menuButton.action = "revealToggle:"
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
     }
     
     func loadResaults() {
@@ -107,26 +115,11 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
                     })
 
                 }
-                
-                
-                
-                
+                     
             }
         }
-
-        /*var filter = OdataFilter()
-        filter.addFilter("DeletionMark", filterValue: "false", filterOperand: "eq", clauseOperand: "")
         
-        var dataCollection = ODataCollectionManager()
-        
-        dataCollection.setCollectionName(Partner.getCollectionName())
-        
-        dataCollection.makeRequestToCollection(filter)
-                
-        dataCollection._delegate = self*/
     }
-
-    
     
     @IBAction func settingsTouch(sender: UIBarButtonItem) {
         
@@ -134,7 +127,6 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         presentViewController(ViewController, animated: true, completion: nil)
         
     }
-    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
@@ -151,10 +143,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
             resultSearchController.active = false
         }
         
-       
-        
     }
-
     
     // MARK: UISearchResultsUpdating
     
@@ -200,15 +189,14 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         
         cell.titleLabel.text =  partner.name
         
-        //need to find out theare is a phone number or email in contact info
         for elementOfcontactInfo in partner.contactInfo {
             switch elementOfcontactInfo.typeContact {
             case ContactInfo.Keys.Telephone:
-                //cell.telephoneIcon.highlighted = true
+                
                 cell.telephoneIcon.alpha = 1.0
                 
             case ContactInfo.Keys.Email:
-                //cell.emailIcon.highlighted = true
+                
                 cell.emailIcon.alpha = 1.0
             default:
                 continue
@@ -316,7 +304,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
             var passwordTextField: UITextField?
             let alertController = UIAlertController(title: "Wrong password or login", message: "You must provide a username and password", preferredStyle: .Alert)
             let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-                println("Ok Button Pressed")
+                
                 if let login = loginTextField?.text {
                    LoginInformation.sharedInstance().login = login
                 }
@@ -333,12 +321,12 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
             alertController.addAction(ok)
             alertController.addAction(cancel)
             alertController.addTextFieldWithConfigurationHandler { (textField) -> Void in
-                // Enter the textfiled customization code here.
+                
                 loginTextField = textField
                 loginTextField?.placeholder = "Login"
             }
             alertController.addTextFieldWithConfigurationHandler { (textField) -> Void in
-                // Enter the textfiled customization code here.
+                
                 passwordTextField = textField
                 passwordTextField?.placeholder = "Password"
                 passwordTextField?.secureTextEntry = true
@@ -371,14 +359,6 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
             }
         })
     }
-
-    
-    func didRecieveResponse(results: NSDictionary) {
-        
-        println("didRecieveResponse")
-                
-    }
-
 }
     
 

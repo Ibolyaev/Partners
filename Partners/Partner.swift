@@ -43,9 +43,16 @@ class Partner : NSManagedObject {
     }
     
     class func getCollectionName() -> String {
+        
         return "/Catalog_Партнеры?"
     }
+    class func getODataType() -> dataType {
         
+        return dataType.Catalog_Партнеры
+    }
+    
+    
+    
     
     class func updateObject(partner:Partner,dictionary: [String : AnyObject]) {
         partner.name = dictionary[Keys.Name] as! String

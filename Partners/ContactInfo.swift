@@ -40,25 +40,20 @@ class ContactInfo : NSManagedObject {
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
-    
-    
-    init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
+    init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
         let entity =  NSEntityDescription.entityForName("ContactInfo", inManagedObjectContext: context)!
         super.init(entity: entity,insertIntoManagedObjectContext: context)
-        
         
         info = dictionary[Keys.Info] as! String
         telephoneNumber = dictionary[Keys.TelephoneNumber] as! String
         typeContact = dictionary[Keys.TypeContact] as! String
         
         refKey = dictionary[Keys.RefKey] as! String
-        //kindOfCOntact = dictionary[Keys.KindOfCOntact] as! String
-        kindOfCOntact = "test"
-        
         
     }
+    
     class func loadUpdateInfoPerson(person:Person, contactInfoJSON:NSArray?,context: NSManagedObjectContext) {
                 
         if let contactInfoJSON = contactInfoJSON {
@@ -80,16 +75,11 @@ class ContactInfo : NSManagedObject {
                 CoreDataStackManager.sharedInstance().saveContext()
                 
             }
-            
-            
+          
         }
     }
-
-
     
     class func loadUpdateInfoPartner(partner:Partner, contactInfoJSON:NSArray?,context: NSManagedObjectContext) {
-        
-        
         
         if let contactInfoJSON = contactInfoJSON {
             
@@ -110,8 +100,6 @@ class ContactInfo : NSManagedObject {
                 CoreDataStackManager.sharedInstance().saveContext()
                 
             }
-            
-            
         }
     }
 

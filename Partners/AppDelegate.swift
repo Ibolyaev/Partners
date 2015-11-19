@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject :AnyObject]?) -> Bool {
         
-        var storyboard = UIStoryboard(name: "Main", bundle: nil)
+        /*var storyboard = UIStoryboard(name: "Main", bundle: nil)
         var initialViewController = storyboard.instantiateViewControllerWithIdentifier("SettingsViewController") as! UIViewController
         
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         self.window?.rootViewController = initialViewController
-        self.window?.makeKeyAndVisible()
+        self.window?.makeKeyAndVisible()*/
         
         return true
     }
