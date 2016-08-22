@@ -36,7 +36,7 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         
         /* Configure tap recognizer */
-        tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.handleSingleTap(_:)))
         tapRecognizer?.numberOfTapsRequired = 1
     }
 
@@ -82,7 +82,7 @@ class SettingsViewController: UIViewController {
         req.timeoutInterval = 1.0 // Adjust to your needs
         
         var response : NSURLResponse?
-        NSURLConnection.sendSynchronousRequest(req, returningResponse: &response, error: nil)
+        try? NSURLConnection.sendSynchronousRequest(req, returningResponse: &response)
         
         return ((response as? NSHTTPURLResponse)?.statusCode ?? -1) == 200
     }

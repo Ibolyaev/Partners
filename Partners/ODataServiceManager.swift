@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-class ODataServiceManager: NSObject, ODataCollectionDelegate{
+class ODataServiceManager: NSObject, ODataCollectionDelegate {
     
     internal var _entitiesAvailable: NSMutableArray = NSMutableArray()
     internal var _collectionListLoaded: Bool = false;
@@ -38,7 +39,7 @@ class ODataServiceManager: NSObject, ODataCollectionDelegate{
     class func createCollectionManagerForCollection(collectionName:NSString, andDelegate:ODataCollectionDelegate) -> ODataCollectionManager{
         
         // New instance of a collection.
-        var newCollectionManager: ODataCollectionManager = ODataCollectionManager();
+        let newCollectionManager: ODataCollectionManager = ODataCollectionManager();
         
         // Set the delegate and the collection name.
         newCollectionManager.setDelegate(andDelegate)
@@ -62,9 +63,11 @@ class ODataServiceManager: NSObject, ODataCollectionDelegate{
         self._oDataRequester = ODataServiceManager.createCollectionManagerForCollection("", andDelegate: self)
     }
     
-    func didRecieveResponse(results: NSDictionary){
+    func didRecieveResponse(results: JSON){
         
-        let queryDictionary = results.objectForKey("d") as! NSMutableDictionary
+        print(results)
+        
+        /*let queryDictionary = results.objectForKey("d") as! NSMutableDictionary
         let queryResults = queryDictionary.objectForKey("EntitySets") as! NSMutableArray
         
         for singleResult in queryResults{
@@ -75,13 +78,13 @@ class ODataServiceManager: NSObject, ODataCollectionDelegate{
         
         // Very important if we want to exit the infinite loop above!
         // There has to be a better way to do this!!! :)
-        self._collectionListLoaded = true
+        self._collectionListLoaded = true*/
     }
     
     func requestFailedWithError(error: NSString){
-        println("=== ERROR ERROR ERROR ===")
-        println("Unable to request entity listing from OData service - is it an odata server??")
-        println("Error: " + (error as String))
+        print("=== ERROR ERROR ERROR ===")
+        print("Unable to request entity listing from OData service - is it an odata server??")
+        print("Error: " + (error as String))
     }
 
 }

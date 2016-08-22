@@ -9,8 +9,9 @@
 import Foundation
 import UIKit
 import CoreData
+import SwiftyJSON
 
-class PartnersViewController: UITableViewController, NSFetchedResultsControllerDelegate, ODataCollectionDelegate, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating,UISearchControllerDelegate {
+class PartnersViewController: UITableViewController, NSFetchedResultsControllerDelegate, ODataCollectionDelegate, UISearchResultsUpdating,UISearchControllerDelegate {
     
     var jsonResault: NSArray?
     var resultSearchController = UISearchController()
@@ -53,7 +54,10 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchedResultsController.performFetch(nil)
+        do {
+            try fetchedResultsController.performFetch()
+        } catch _ {
+        }
         fetchedResultsController.delegate = self
         
         self.resultSearchController = ({
@@ -68,8 +72,8 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
             return controller
         })()
         
-        var refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: Selector("loadResaults"), forControlEvents: UIControlEvents.ValueChanged)
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(PartnersViewController.loadResaults), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = refreshControl
         
         
@@ -81,10 +85,10 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     
     func loadOdata() {
         
-        var filter = OdataFilter()
+        let filter = OdataFilter()
         filter.addFilter("DeletionMark", filterValue: "false", filterOperand: "eq", clauseOperand: "")
         
-        var dataCollection = ODataCollectionManager()
+        let dataCollection = ODataCollectionManager()
         
         dataCollection.setCollectionName(Partner.getCollectionName())
         
@@ -97,7 +101,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     
     @IBAction func settingsTouch(sender: UIBarButtonItem) {
         
-        var ViewController = self.storyboard!.instantiateViewControllerWithIdentifier("SettingsViewController") as! SettingsViewController
+        let ViewController = self.storyboard!.instantiateViewControllerWithIdentifier("SettingsViewController") as! SettingsViewController
         presentViewController(ViewController, animated: true, completion: nil)
         
     }
@@ -105,9 +109,9 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        var secondViewController : PartnerDetailInfo = segue.destinationViewController as! PartnerDetailInfo
+        let secondViewController : PartnerDetailInfo = segue.destinationViewController as! PartnerDetailInfo
         
-        var indexPath = tableView.indexPathForSelectedRow() //get index of data for selected row
+        let indexPath = tableView.indexPathForSelectedRow //get index of data for selected row
         
         let partner: AnyObject = currentResultsController.objectAtIndexPath(indexPath!)
         
@@ -126,14 +130,17 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         
-        let firstNamePredicate = NSPredicate(format: "name CONTAINS[cd] %@", searchController.searchBar.text.lowercaseString)
+        let firstNamePredicate = NSPredicate(format: "name CONTAINS[cd] %@", searchController.searchBar.text!.lowercaseString)
         
-        let predicate = NSCompoundPredicate.orPredicateWithSubpredicates([firstNamePredicate])
+        let predicate = NSCompoundPredicate.init(andPredicateWithSubpredicates: [firstNamePredicate])
         
         fetchRequest.predicate = predicate
         
         searchResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: sharedContext, sectionNameKeyPath: nil, cacheName: nil)
-        searchResultsController?.performFetch(nil)
+        do {
+            try searchResultsController?.performFetch()
+        } catch _ {
+        }
         
         self.tableView.reloadData()
 
@@ -156,7 +163,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = self.tableView.dequeueReusableCellWithIdentifier("PartnerInfoCell", forIndexPath: indexPath) as! PartnerInfoCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("PartnerInfoCell", forIndexPath: indexPath) as! PartnerInfoCell
         
         let partner = currentResultsController.objectAtIndexPath(indexPath) as! Partner
         
@@ -188,7 +195,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         
     }
     
-    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]! {
+    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
         
         return self.currentResultsController.sectionIndexTitles
         
@@ -200,9 +207,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
             
             if let sectionInfo = sections[section] as? NSFetchedResultsSectionInfo {
                 
-                if let name = sectionInfo.name {
-                    return sectionInfo.indexTitle
-                }
+                return sectionInfo.indexTitle
                 
             }
             
@@ -226,7 +231,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         
         var rows = 0
         if self.currentResultsController.sections!.count > 0 {
-            var sectionInfo = self.currentResultsController.sections![section] as! NSFetchedResultsSectionInfo
+            let sectionInfo = self.currentResultsController.sections![section] 
             rows = sectionInfo.numberOfObjects
         }
         return rows
@@ -260,7 +265,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         switch type {
         case NSFetchedResultsChangeType.Insert:
-             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         case NSFetchedResultsChangeType.Delete:
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
         case NSFetchedResultsChangeType.Update:
@@ -278,7 +283,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
             var passwordTextField: UITextField?
             let alertController = UIAlertController(title: "Wrong password or login", message: "You must provide a username and password", preferredStyle: .Alert)
             let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-                println("Ok Button Pressed")
+                print("Ok Button Pressed")
                 if let login = loginTextField?.text {
                    LoginInformation.sharedInstance().login = login
                 }
@@ -289,7 +294,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
                 self.loadResaults()
             })
             let cancel = UIAlertAction(title: "Cancel", style: .Cancel) { (action) -> Void in
-                println("Cancel Button Pressed")
+                print("Cancel Button Pressed")
                 self.refreshControl?.endRefreshing()
             }
             alertController.addAction(ok)
@@ -335,11 +340,13 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     }
 
     
-    func didRecieveResponse(results: NSDictionary) {
+    func didRecieveResponse(results: JSON) {
         
-        println("didRecieveResponse")
-        jsonResault = JSON(results)?[key:"value"] as? NSArray
-        let odataMetadata = JSON(results)?[key:"odata.metadata"] as? NSString
+        print("didRecieveResponse")
+        //print(results)
+        
+        let jsonResault = results["value"].array
+        let odataMetadata = results["odata.metadata"].string
         
         var odataType = ""
         
@@ -348,10 +355,10 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
             let string = odataMetadata as String
             
             let needle: Character = "#"
-            if let idx = find(string, needle) {
-                let pos = distance(string.startIndex, idx)
+            if let idx = string.characters.indexOf(needle) {
+                let pos = string.startIndex.distanceTo(idx)
                 
-                odataType = string.substringFromIndex(advance(string.startIndex,pos+1))
+                odataType = string.substringFromIndex(string.startIndex.advancedBy(pos+1))
                 
             }
             else {
@@ -362,18 +369,17 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
             displayError("Unkown data type: \(odataType)", titleError: "Failed to load data")
             
         }
-        println("\(odataType)")
+        print("\(odataType)")
         
         
         if Partner.getCollectionName() == "/\(odataType)?" {
-            if let jsonResault = jsonResault {
-               loadPartnersInfo(jsonResault)
-            }
+            loadPartnersInfo(jsonResault!)
+            
             dispatch_async(dispatch_get_main_queue()) {
                 CoreDataStackManager.sharedInstance().saveContext()
                 //we need to download persons info after we load partners
-                var filter = OdataFilter()
-                var dataCollection = ODataCollectionManager()
+                let filter = OdataFilter()
+                let dataCollection = ODataCollectionManager()
                 dataCollection.setCollectionName(Person.getCollectionName())
                 
                 dataCollection.makeRequestToCollection(filter)
@@ -387,9 +393,7 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
         }
         
         if Person.getCollectionName() == "/\(odataType)?" {
-            if let jsonResault = jsonResault {
-                loadPersonsInfo(jsonResault)
-            }
+            loadPersonsInfo(jsonResault!)
             self.refreshControl?.endRefreshing()
                         
             dispatch_async(dispatch_get_main_queue()) {
@@ -403,28 +407,35 @@ class PartnersViewController: UITableViewController, NSFetchedResultsControllerD
     }
 
 
-    func loadPartnersInfo(jsonResault:NSArray) {
+    func loadPartnersInfo(jsonResault:[JSON]) {
         
-        for var i=0;i<jsonResault.count; i++ {
-            let contactJSON = jsonResault.objectAtIndex(i) as! JSONValue
+        for i in 0 ..< jsonResault.count {
+            let contactJSON = jsonResault[i]
             
-            let contactInfoJSON = contactJSON[key:ContactInfo.Keys.ContactInfoText] as? NSArray
+            let partner = Partner.loadUpdateInfo(contactJSON, context: sharedContext)
+           
+            let contactInfoJSON = contactJSON[ContactInfo.Keys.ContactInfoText].array
             
-            let partner = Partner.loadUpdateInfo(contactJSON as! [String : AnyObject], context: sharedContext)
+            if let _contactInfoJSON = contactInfoJSON {
+                ContactInfo.loadUpdateInfoPartner(partner, contactInfoJSON: _contactInfoJSON, context: sharedContext)
+                CoreDataStackManager.sharedInstance().saveContext()
+            }
             
-            ContactInfo.loadUpdateInfoPartner(partner, contactInfoJSON: contactInfoJSON, context: sharedContext)
-            CoreDataStackManager.sharedInstance().saveContext()
+            
+           
+            
+            
             
         }
     }
     
-    func loadPersonsInfo(jsonResault:NSArray) {
-        for var i=0;i<jsonResault.count; i++ {
-            let contactJSON = jsonResault.objectAtIndex(i) as! JSONValue
+    func loadPersonsInfo(jsonResault:[JSON]) {
+        for i in 0 ..< jsonResault.count {
+            let contactJSON = jsonResault[i]
             
-            let contactInfoJSON = contactJSON[key:ContactInfo.Keys.ContactInfoText] as? NSArray
+            let contactInfoJSON = contactJSON[ContactInfo.Keys.ContactInfoText].array
             
-            let person = Person.loadUpdateInfo(contactJSON as! [String : AnyObject], context: sharedContext)
+            let person = Person.loadUpdateInfo(contactJSON, context: sharedContext)
             
             ContactInfo.loadUpdateInfoPerson(person, contactInfoJSON: contactInfoJSON, context: sharedContext)
             CoreDataStackManager.sharedInstance().saveContext()

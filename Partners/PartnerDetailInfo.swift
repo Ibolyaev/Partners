@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import AddressBookUI
 
-class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableViewDelegate,ABUnknownPersonViewControllerDelegate {
+class PartnerDetailInfo: UITableViewController, ABUnknownPersonViewControllerDelegate {
 
     var partner: Partner?
     var contactInfo: NSArray?
@@ -21,7 +21,7 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
             &error).takeRetainedValue() as ABAddressBookRef
         }()
     
-    func unknownPersonViewController(unknownCardViewController: ABUnknownPersonViewController!, didResolveToPerson person: ABRecord!) {
+    func unknownPersonViewController(unknownCardViewController: ABUnknownPersonViewController, didResolveToPerson person: ABRecord?) {
         self.navigationController?.popToViewController(self, animated: false)
     }
     
@@ -98,7 +98,7 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
             headerCell.subTitleLabel.text = ""
         }
         
-        headerCell.addContact.addTarget(self, action: "addContact:", forControlEvents: UIControlEvents.TouchUpInside)
+        headerCell.addContact.addTarget(self, action: #selector(PartnerDetailInfo.addContact(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         headerCell.addContact.tag = section
                 
         return headerCell
@@ -107,7 +107,7 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = self.tableView.dequeueReusableCellWithIdentifier("ContactInfoCell", forIndexPath: indexPath) as! ContactInfoCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("ContactInfoCell", forIndexPath: indexPath) as! ContactInfoCell
         return configureContactInfoCell(cell,indexPath: indexPath)
         
     }
@@ -121,7 +121,7 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
                 let person = partner.persons[indexPath.section-1]
                 let contactInfoPerson = person.contactInfo as NSArray
                                 
-                var elementOfcontactInfo = contactInfoPerson.objectAtIndex(indexPath.row) as! ContactInfo
+                let elementOfcontactInfo = contactInfoPerson.objectAtIndex(indexPath.row) as! ContactInfo
                     
                     switch elementOfcontactInfo.typeContact {
                     case ContactInfo.Keys.Telephone:
@@ -140,7 +140,7 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
         }else{
             
             if let contactInfo = contactInfo {
-                var elementOfcontactInfo = contactInfo.objectAtIndex(indexPath.row) as! ContactInfo
+                let elementOfcontactInfo = contactInfo.objectAtIndex(indexPath.row) as! ContactInfo
                 
                 switch elementOfcontactInfo.typeContact {
                 case ContactInfo.Keys.Telephone:
@@ -168,7 +168,7 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
     }
     func addNewContact(sender:UIButton) {
         
-        var abNew = ABUnknownPersonViewController()
+        let abNew = ABUnknownPersonViewController()
         let person: ABRecordRef = ABPersonCreate().takeRetainedValue()
         
         let section = sender.tag
@@ -218,8 +218,8 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
             case ContactInfo.Keys.Telephone:
                 let propertyType: NSNumber = kABMultiStringPropertyType
                 
-                var phoneNumbers: ABMutableMultiValueRef =  createMultiStringRef()
-                var phone = ((contactInformation.telephoneNumber).stringByReplacingOccurrencesOfString(" ", withString: "") as NSString)
+                let phoneNumbers: ABMutableMultiValueRef =  createMultiStringRef()
+                let phone = ((contactInformation.telephoneNumber).stringByReplacingOccurrencesOfString(" ", withString: "") as NSString)
                 
                 ABMultiValueAddValueAndLabel(phoneNumbers, phone, kABPersonPhoneMainLabel, nil)
                 ABRecordSetValue(person, kABPersonPhoneProperty, phoneNumbers, nil)
@@ -243,25 +243,25 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
         
         switch ABAddressBookGetAuthorizationStatus(){
         case .Authorized:
-            print("Already authorized")
+            print("Already authorized", terminator: "")
             addNewContact(sender)
         case .Denied:
-            print("You are denied access to address book")
+            print("You are denied access to address book", terminator: "")
             
         case .NotDetermined:
             ABAddressBookRequestAccessWithCompletion(addressBook,
                 {granted, error in
                     
                     if granted{
-                        print("Access is granted")
+                        print("Access is granted", terminator: "")
                         self.addNewContact(sender)
                     } else {
-                        print("Access is not granted")
+                        print("Access is not granted", terminator: "")
                     }
                     
             })
         case .Restricted:
-            print("Access is restricted")
+            print("Access is restricted", terminator: "")
             
         }
       }
@@ -292,7 +292,7 @@ class PartnerDetailInfo: UITableViewController, UITableViewDataSource,UITableVie
         
         if let contactInfo = contactInfo {
             
-            var elementOfcontactInfo = contactInfo.objectAtIndex(sender.tag) as! ContactInfo
+            let elementOfcontactInfo = contactInfo.objectAtIndex(sender.tag) as! ContactInfo
             callAction(elementOfcontactInfo)
         }
         

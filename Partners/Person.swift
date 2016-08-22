@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import SwiftyJSON
 
 
 @objc(Person)
@@ -39,16 +40,16 @@ class Person : NSManagedObject {
     }
     
     
-    init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
+    init(json: JSON, context: NSManagedObjectContext) {
         
         let entity =  NSEntityDescription.entityForName("Person", inManagedObjectContext: context)!
         super.init(entity: entity,insertIntoManagedObjectContext: context)
         
-        name = dictionary[Keys.Name] as! String
-        refKey = dictionary[Keys.RefKey] as! String
-        role = dictionary[Keys.Role] as! String
+        name = json[Keys.Name].string!
+        refKey = json[Keys.RefKey].string!
+        role = json[Keys.Role].string!
         
-        ownerRefKey = dictionary[Keys.OwnerRefKey] as! String
+        ownerRefKey = json[Keys.OwnerRefKey].string!
         let findedPartner = Person.getPartnerbyReferenceKey(ownerRefKey,context: context)
         if let partner = findedPartner {
             self.partner = partner
@@ -70,14 +71,14 @@ class Person : NSManagedObject {
             
         let firstNamePredicate = NSPredicate(format: "refKey == %@", ownerRefKey)
         
-        let predicate = NSCompoundPredicate.orPredicateWithSubpredicates([firstNamePredicate])
+        let predicate = NSCompoundPredicate.init(orPredicateWithSubpredicates: [firstNamePredicate])
         
         fetchRequest.predicate = predicate
         
         let count = context.countForFetchRequest(fetchRequest, error: nil)
         
         if count > 0 {
-            let resault = context.executeFetchRequest(fetchRequest, error: nil) as! [Partner]
+            let resault = (try! context.executeFetchRequest(fetchRequest)) as! [Partner]
             
             for element in resault {
                 
@@ -90,10 +91,10 @@ class Person : NSManagedObject {
       
     }
     
-    class func updateObject(person:Person,dictionary: [String : AnyObject],context: NSManagedObjectContext) {
-        person.name = dictionary[Keys.Name] as! String
-        person.refKey = dictionary[Keys.RefKey] as! String
-        person.role = dictionary[Keys.Role] as! String
+    class func updateObject(person:Person,json: JSON,context: NSManagedObjectContext) {
+        person.name = json[Keys.Name].string!
+        person.refKey = json[Keys.RefKey].string!
+        person.role = json[Keys.Role].string!
         
         let findedPartner = Person.getPartnerbyReferenceKey(person.ownerRefKey,context: context)
         if let partner = findedPartner {
@@ -102,25 +103,25 @@ class Person : NSManagedObject {
 
     }
     
-    class func loadUpdateInfo(dictionary: [String : AnyObject], context: NSManagedObjectContext) -> Person {
+    class func loadUpdateInfo(json: JSON, context: NSManagedObjectContext) -> Person {
         
         let fetchRequest = NSFetchRequest(entityName: "Person")
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "refKey", ascending: true)]
         
-        let firstNamePredicate = NSPredicate(format: "refKey == %@", dictionary[Keys.RefKey] as! String)
+        let firstNamePredicate = NSPredicate(format: "refKey == %@", json[Keys.RefKey].string!)
         
-        let predicate = NSCompoundPredicate.orPredicateWithSubpredicates([firstNamePredicate])
-        
+        let predicate = NSCompoundPredicate.init(orPredicateWithSubpredicates: [firstNamePredicate])
+                
         fetchRequest.predicate = predicate
         
         let count = context.countForFetchRequest(fetchRequest, error: nil)
         
         if count > 0 {
-            let resault = context.executeFetchRequest(fetchRequest, error: nil) as! [Person]
+            let resault = (try! context.executeFetchRequest(fetchRequest)) as! [Person]
             
             for element in resault {
-                updateObject(element,dictionary: dictionary,context: context)
+                updateObject(element,json: json,context: context)
                 CoreDataStackManager.sharedInstance().saveContext()
                 return element
             }
@@ -128,7 +129,7 @@ class Person : NSManagedObject {
         }
         
         
-        return Person(dictionary: dictionary, context: context)
+        return Person(json: json, context: context)
         
     }
     

@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import SwiftyJSON
 
 
 @objc(ContactInfo)
@@ -42,24 +43,24 @@ class ContactInfo : NSManagedObject {
     }
     
     
-    init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
+    init(json: JSON, context: NSManagedObjectContext) {
         
         
         let entity =  NSEntityDescription.entityForName("ContactInfo", inManagedObjectContext: context)!
         super.init(entity: entity,insertIntoManagedObjectContext: context)
         
         
-        info = dictionary[Keys.Info] as! String
-        telephoneNumber = dictionary[Keys.TelephoneNumber] as! String
-        typeContact = dictionary[Keys.TypeContact] as! String
+        info = json[Keys.Info].string!
+        telephoneNumber = json[Keys.TelephoneNumber].string!
+        typeContact = json[Keys.TypeContact].string!
         
-        refKey = dictionary[Keys.RefKey] as! String
+        refKey = json[Keys.RefKey].string!
         //kindOfCOntact = dictionary[Keys.KindOfCOntact] as! String
         kindOfCOntact = "test"
         
         
     }
-    class func loadUpdateInfoPerson(person:Person, contactInfoJSON:NSArray?,context: NSManagedObjectContext) {
+    class func loadUpdateInfoPerson(person:Person, contactInfoJSON:[JSON]? ,context: NSManagedObjectContext) {
                 
         if let contactInfoJSON = contactInfoJSON {
             
@@ -75,22 +76,19 @@ class ContactInfo : NSManagedObject {
             }
             for el in contactInfoJSON {
                 
-                let contactInfo = ContactInfo(dictionary: el as! [String : AnyObject], context: context)
+                let contactInfo = ContactInfo(json: el, context: context)
                 contactInfo.person = person
                 CoreDataStackManager.sharedInstance().saveContext()
                 
             }
-            
-            
+                        
         }
     }
 
 
     
-    class func loadUpdateInfoPartner(partner:Partner, contactInfoJSON:NSArray?,context: NSManagedObjectContext) {
-        
-        
-        
+    class func loadUpdateInfoPartner(partner:Partner, contactInfoJSON:[JSON]?,context: NSManagedObjectContext) {
+       
         if let contactInfoJSON = contactInfoJSON {
             
             // if its new partner witout contact info and in JSONdata we have something - create a new contact info
@@ -105,7 +103,7 @@ class ContactInfo : NSManagedObject {
             }
             for el in contactInfoJSON {
                 
-                let contactInfo = ContactInfo(dictionary: el as! [String : AnyObject], context: context)
+                let contactInfo = ContactInfo(json: el , context: context)
                 contactInfo.partner = partner
                 CoreDataStackManager.sharedInstance().saveContext()
                 
